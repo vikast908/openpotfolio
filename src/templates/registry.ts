@@ -10,6 +10,7 @@ import academic from "./academic";
 import freelancer from "./freelancer";
 import studio from "./studio-bento";
 import { appleTemplates } from "./apple-suite";
+import { editorialTemplates } from "./editorial-suite";
 
 export const templates: Template[] = [
   minimalDev,
@@ -23,6 +24,7 @@ export const templates: Template[] = [
   freelancer,
   studio,
   ...appleTemplates,
+  ...editorialTemplates,
 ];
 
 export function getTemplate(id: string): Template | undefined {
