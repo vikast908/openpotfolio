@@ -9,6 +9,7 @@ import type {
 import type { Template } from "@/templates/types";
 import { FONTS, type FontEntry } from "@/lib/portfolio/fonts";
 import { resolveTheme } from "@/lib/portfolio/theme";
+import { PALETTE_PRESETS, type PalettePreset } from "@/lib/portfolio/palettes";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -61,6 +62,9 @@ export function StylePanel({ config, template, onChange }: Props) {
   const setColor = (role: PortfolioColorRole, value: string) =>
     setTheme((t) => ({ ...t, colors: { ...t.colors, [role]: value } }));
 
+  const applyPalette = (p: PalettePreset) =>
+    setTheme((t) => ({ ...t, colors: { ...p.colors } }));
+
   const setTypo = <K extends keyof typeof resolved.typography>(
     key: K,
     value: (typeof resolved.typography)[K],
@@ -105,6 +109,26 @@ export function StylePanel({ config, template, onChange }: Props) {
         </TabsList>
 
         <TabsContent value="colors" className="space-y-3 pt-3">
+          <div className="space-y-1.5">
+            <Label className="text-[11px] text-muted-foreground">One-click palette</Label>
+            <div className="grid grid-cols-4 gap-1.5">
+              {PALETTE_PRESETS.map((p) => (
+                <button
+                  key={p.key}
+                  onClick={() => applyPalette(p)}
+                  title={`${p.name} · ${p.category}`}
+                  className="group relative flex h-9 overflow-hidden rounded border transition-transform hover:scale-[1.04] hover:border-primary/60"
+                  aria-label={`Apply ${p.name} palette`}
+                >
+                  <span className="flex-1" style={{ background: p.colors.background }} />
+                  <span className="flex-1" style={{ background: p.colors.surface }} />
+                  <span className="flex-1" style={{ background: p.colors.text }} />
+                  <span className="flex-1" style={{ background: p.colors.accent }} />
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="h-px bg-border/60 my-2" />
           {c.colorRoles.map((role) => (
             <div key={role} className="flex items-center gap-2">
               <input
