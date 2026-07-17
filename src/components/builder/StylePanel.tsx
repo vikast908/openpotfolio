@@ -356,3 +356,61 @@ function SliderRow({
     </div>
   );
 }
+
+// ─── Contrast (WCAG) ─────────────────────────────────────────────────
+
+type ContrastReport = { ratio: number; level: "AAA" | "AA" | "AA-large" | "fail" };
+
+function hexToRgb(hex: string): [number, number, number] | null {
+  const h = hex.trim().replace("#", "");
+  const full =
+    h.length === 3
+      ? h.split("").map((c) => c + c).join("")
+      : h.length === 6
+        ? h
+        : null;
+  if (!full) return null;
+  const n = parseInt(full, 16);
+  if (Number.isNaN(n)) return null;
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function relLum([r, g, b]: [number, number, number]): number {
+  const f = (v: number) => {
+    const s = v / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  };
+  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+}
+
+function getContrastReport(fg: string, bg: string): ContrastReport {
+  const a = hexToRgb(fg);
+  const b = hexToRgb(bg);
+  if (!a || !b) return { ratio: 1, level: "fail" };
+  const l1 = relLum(a);
+  const l2 = relLum(b);
+  const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+  const level: ContrastReport["level"] =
+    ratio >= 7 ? "AAA" : ratio >= 4.5 ? "AA" : ratio >= 3 ? "AA-large" : "fail";
+  return { ratio, level };
+}
+
+function ContrastRow({ label, report }: { label: string; report: ContrastReport }) {
+  const ok = report.level === "AAA" || report.level === "AA";
+  const warn = report.level === "AA-large";
+  const Icon = ok ? CheckCircle2 : AlertTriangle;
+  const color = ok
+    ? "text-emerald-600 dark:text-emerald-400"
+    : warn
+      ? "text-amber-600 dark:text-amber-400"
+      : "text-destructive";
+  return (
+    <div className="flex items-center justify-between text-[11px]">
+      <span className="text-muted-foreground">{label}</span>
+      <span className={`inline-flex items-center gap-1 font-mono ${color}`}>
+        <Icon className="h-3 w-3" />
+        {report.ratio.toFixed(2)}:1 · {report.level}
+      </span>
+    </div>
+  );
+}
