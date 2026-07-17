@@ -7,17 +7,9 @@ import { ArrowRight, Github, Sparkles, Download, Link as LinkIcon } from "lucide
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Portfolio Builder — pick a template, fill a form, ship your site" },
-      {
-        name: "description",
-        content:
-          "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT.",
-      },
-      { property: "og:title", content: "Portfolio Builder — pick a template, fill a form, ship your site" },
-      { property: "og:description", content: "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: "https://openpotfolio.lovable.app/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Landing,
 });
@@ -26,6 +18,7 @@ function Landing() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
+      <main>
       <section className="mx-auto max-w-5xl px-6 py-24 text-center">
         <span className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs text-muted-foreground">
           <Sparkles className="h-3 w-3" /> MIT · open source
@@ -90,7 +83,7 @@ function Landing() {
           ))}
         </div>
       </section>
-
+      </main>
       <Footer />
     </div>
   );
