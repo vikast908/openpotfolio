@@ -30,11 +30,13 @@ function Landing() {
         <span className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs text-muted-foreground">
           <Sparkles className="h-3 w-3" /> MIT · open source
         </span>
-        <h1 className="mt-6 text-5xl font-bold tracking-tight sm:text-6xl">
+        <h1 className="font-display mt-8 text-6xl leading-[0.95] tracking-tight sm:text-8xl">
           Your portfolio,<br />
-          <span className="text-primary">in five minutes.</span>
+          <em className="not-italic text-primary">
+            <span className="italic">in five</span> minutes.
+          </em>
         </h1>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
+        <p className="mx-auto mt-8 max-w-xl text-lg text-muted-foreground">
           Pick a template, fill one form, watch it render live. Download a static site — or hand it to Lovable,
           ChatGPT, Claude, or v0 to extend.
         </p>
@@ -75,9 +77,9 @@ function Landing() {
               key={t.meta.id}
               to="/build/$templateId"
               params={{ templateId: t.meta.id }}
-              className="group rounded-lg border p-4 transition hover:border-primary hover:shadow-sm"
+              className="group rounded-xl border p-4 transition-[transform,box-shadow,border-color] duration-200 ease-[var(--ease-out)] hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-[var(--shadow-elegant)]"
             >
-              <div className="mb-3 flex h-24 gap-1 overflow-hidden rounded-md">
+              <div className="mb-3 flex h-24 gap-1 overflow-hidden rounded-lg">
                 {t.meta.swatch.map((c, i) => (
                   <div key={i} className="flex-1" style={{ background: c }} />
                 ))}
