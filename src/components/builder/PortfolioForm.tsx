@@ -147,33 +147,7 @@ export function PortfolioForm({ config, onChange }: Props) {
         ))}
       </section>
 
-      <section className="space-y-3">
-        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Theme</h3>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <Field label="Accent color">
-            <div className="flex gap-2">
-              <input
-                type="color"
-                className="h-10 w-14 rounded border"
-                value={config.theme.accent}
-                onChange={(e) => set("theme", { ...config.theme, accent: e.target.value })}
-              />
-              <Input value={config.theme.accent} onChange={(e) => set("theme", { ...config.theme, accent: e.target.value })} />
-            </div>
-          </Field>
-          <Field label="Font">
-            <select
-              className="h-10 rounded-md border bg-background px-3 text-sm"
-              value={config.theme.font}
-              onChange={(e) => set("theme", { ...config.theme, font: e.target.value as "sans" | "serif" | "mono" })}
-            >
-              <option value="sans">Sans</option>
-              <option value="serif">Serif</option>
-              <option value="mono">Mono</option>
-            </select>
-          </Field>
-        </div>
-      </section>
+      {/* Style panel is mounted separately by the builder route. */}
     </div>
   );
 }

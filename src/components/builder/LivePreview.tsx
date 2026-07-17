@@ -35,18 +35,15 @@ export function LivePreview({
     currentTemplateId.current = debounced.templateId;
 
     const doc = frame.contentDocument;
-    // First mount OR template switch: write the full document once.
-    if (!doc || templateChanged || !doc.body || !doc.body.hasChildNodes()) {
-      // Wait for the iframe to be ready then write.
-      const write = () => {
-        const d = frame.contentDocument;
-        if (!d) return;
-        d.open();
-        d.write(html);
-        d.close();
-      };
-      if (frame.contentDocument?.readyState === "complete") write();
-      else frame.addEventListener("load", write, { once: true });
+    const needsFullWrite =
+      !doc ||
+      templateChanged ||
+      !doc.body ||
+      !doc.body.hasChildNodes() ||
+      !doc.querySelector("style");
+    // First mount OR template switch: write via srcdoc so browser guarantees load.
+    if (needsFullWrite) {
+      frame.srcdoc = html;
       return;
     }
 

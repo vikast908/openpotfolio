@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { defaultConfig, withDefaults, type PortfolioConfig } from "@/lib/portfolio/types";
 import { getTemplate, templates } from "@/templates/registry";
 import { PortfolioForm } from "@/components/builder/PortfolioForm";
+import { StylePanel } from "@/components/builder/StylePanel";
 import { LivePreview } from "@/components/builder/LivePreview";
 import { ExportDialog } from "@/components/builder/ExportDialog";
 import { readHashConfig } from "@/lib/portfolio/encode";
@@ -150,6 +151,9 @@ function Builder() {
       <div className="grid flex-1 grid-cols-1 overflow-hidden lg:grid-cols-[minmax(0,420px)_1fr]">
         <div className="overflow-y-auto border-r p-6">
           <PortfolioForm config={config} onChange={setConfig} />
+          <div className="mt-8">
+            <StylePanel config={config} template={template} onChange={setConfig} />
+          </div>
         </div>
         <div className="hidden lg:block overflow-hidden">
           <LivePreview config={config} device={device} />
