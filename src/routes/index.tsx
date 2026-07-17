@@ -1,24 +1,140 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
+import { templates } from "@/templates/registry";
+import { ArrowRight, Github, Sparkles, Download, Link as LinkIcon } from "lucide-react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Portfolio Builder — pick a template, fill a form, ship your site" },
+      {
+        name: "description",
+        content:
+          "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT.",
+      },
+      { property: "og:title", content: "Portfolio Builder — open source" },
+      { property: "og:description", content: "Pick a template, fill a form, download or ship to any AI agent. MIT." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Landing() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background text-foreground">
+      <Nav />
+      <section className="mx-auto max-w-5xl px-6 py-24 text-center">
+        <span className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs text-muted-foreground">
+          <Sparkles className="h-3 w-3" /> MIT · open source
+        </span>
+        <h1 className="mt-6 text-5xl font-bold tracking-tight sm:text-6xl">
+          Your portfolio,<br />
+          <span className="text-primary">in five minutes.</span>
+        </h1>
+        <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
+          Pick a template, fill one form, watch it render live. Download a static site — or hand it to Lovable,
+          ChatGPT, Claude, or v0 to extend.
+        </p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Button asChild size="lg">
+            <Link to="/templates">
+              Browse templates <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="lg">
+            <Link to="/about">How it works</Link>
+          </Button>
+        </div>
+
+        <div className="mt-14 grid gap-4 sm:grid-cols-3 text-left">
+          <Feature icon={<Sparkles className="h-5 w-5" />} title="Live preview">
+            Side-by-side rendering updates as you type.
+          </Feature>
+          <Feature icon={<Download className="h-5 w-5" />} title="Static download">
+            A single HTML/CSS zip. Host it anywhere. Yours forever.
+          </Feature>
+          <Feature icon={<LinkIcon className="h-5 w-5" />} title="AI-agent handoff">
+            Copy a link + prompt into any AI coding agent to keep building.
+          </Feature>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="mb-6 flex items-end justify-between">
+          <h2 className="text-2xl font-semibold">10 templates, ready to ship</h2>
+          <Link to="/templates" className="text-sm text-primary hover:underline">
+            View all →
+          </Link>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {templates.slice(0, 8).map((t) => (
+            <Link
+              key={t.meta.id}
+              to="/build/$templateId"
+              params={{ templateId: t.meta.id }}
+              className="group rounded-lg border p-4 transition hover:border-primary hover:shadow-sm"
+            >
+              <div className="mb-3 flex h-24 gap-1 overflow-hidden rounded-md">
+                {t.meta.swatch.map((c, i) => (
+                  <div key={i} className="flex-1" style={{ background: c }} />
+                ))}
+              </div>
+              <div className="font-medium">{t.meta.name}</div>
+              <div className="text-xs text-muted-foreground">{t.meta.tagline}</div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <Footer />
     </div>
+  );
+}
+
+function Feature({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-lg border p-5">
+      <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-primary">{icon}</div>
+      <div className="font-medium">{title}</div>
+      <div className="mt-1 text-sm text-muted-foreground">{children}</div>
+    </div>
+  );
+}
+
+function Nav() {
+  return (
+    <header className="border-b">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Link to="/" className="font-semibold tracking-tight">
+          Portfolio<span className="text-primary">.</span>build
+        </Link>
+        <nav className="flex items-center gap-4 text-sm">
+          <Link to="/templates" className="text-muted-foreground hover:text-foreground">Templates</Link>
+          <Link to="/about" className="text-muted-foreground hover:text-foreground">About</Link>
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground"
+          >
+            <Github className="h-4 w-4" /> GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 text-sm text-muted-foreground">
+        <div>MIT licensed. Everything you generate is yours.</div>
+        <Link to="/about" className="hover:text-foreground">About →</Link>
+      </div>
+    </footer>
   );
 }
