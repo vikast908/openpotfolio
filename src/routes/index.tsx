@@ -59,7 +59,7 @@ function Landing() {
 
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="mb-6 flex items-end justify-between">
-          <h2 className="text-2xl font-semibold">10 templates, ready to ship</h2>
+          <h2 className="text-2xl font-semibold">Nearly 300 templates, ready to ship</h2>
           <Link to="/templates" className="text-sm text-primary hover:underline">
             View all →
           </Link>
