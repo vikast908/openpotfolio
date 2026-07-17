@@ -77,17 +77,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Portfolio Builder — pick a template, fill a form, ship your site" },
-      { name: "description", content: "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT." },
-      { property: "og:title", content: "Portfolio Builder — pick a template, fill a form, ship your site" },
-      { property: "og:description", content: "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT." },
+      { title: "Portfolio Builder — 300 open-source templates" },
+      { name: "description", content: "Open-source portfolio builder. 300 templates, one form, live preview. Download a static site or hand it to any AI coding agent. MIT." },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Portfolio Builder" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Portfolio Builder — pick a template, fill a form, ship your site" },
-      { name: "twitter:description", content: "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb4e89f4-2fee-4f1a-bbf9-957636dd91a4" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb4e89f4-2fee-4f1a-bbf9-957636dd91a4" },
     ],
     links: [
       {
@@ -101,6 +96,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Portfolio Builder",
+          url: "https://openpotfolio.lovable.app",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://openpotfolio.lovable.app/templates?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Portfolio Builder",
+          url: "https://openpotfolio.lovable.app",
+          logo: "https://openpotfolio.lovable.app/favicon.ico",
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
