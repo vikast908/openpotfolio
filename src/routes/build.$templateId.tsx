@@ -33,6 +33,7 @@ export const Route = createFileRoute("/build/$templateId")({
     meta: [
       { title: `Build — ${params.templateId} · Portfolio Builder` },
       { name: "description", content: "Fill in your details and watch your portfolio render live." },
+      { name: "robots", content: "noindex" },
     ],
   }),
   component: Builder,
@@ -84,6 +85,7 @@ function Builder() {
 
   return (
     <div className="flex h-screen flex-col bg-background">
+      <h1 className="sr-only">Build your {template.meta.name} portfolio</h1>
       <header className="flex items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-4">
           <Link to="/" className="font-semibold tracking-tight">
@@ -148,7 +150,7 @@ function Builder() {
         </div>
       </header>
 
-      <div className="grid flex-1 grid-cols-1 overflow-hidden lg:grid-cols-[minmax(0,420px)_1fr]">
+      <main className="grid flex-1 grid-cols-1 overflow-hidden lg:grid-cols-[minmax(0,420px)_1fr]">
         <div className="overflow-y-auto border-r p-6">
           <PortfolioForm config={config} onChange={setConfig} />
           <div className="mt-8">
@@ -158,7 +160,7 @@ function Builder() {
         <div className="hidden lg:block overflow-hidden">
           <LivePreview config={config} device={device} />
         </div>
-      </div>
+      </main>
 
       <div className="lg:hidden border-t p-4 text-center text-sm text-muted-foreground">
         Open on a larger screen to see the live preview side-by-side, or export to preview.
