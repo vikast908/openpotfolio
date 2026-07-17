@@ -13,8 +13,8 @@ export const Route = createFileRoute("/")({
         content:
           "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT.",
       },
-      { property: "og:title", content: "Portfolio Builder — open source" },
-      { property: "og:description", content: "Pick a template, fill a form, download or ship to any AI agent. MIT." },
+      { property: "og:title", content: "Portfolio Builder — pick a template, fill a form, ship your site" },
+      { property: "og:description", content: "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

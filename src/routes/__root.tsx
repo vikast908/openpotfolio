@@ -77,13 +77,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Portfolio Builder" },
-      { name: "description", content: "Open-source portfolio builder — pick a template, fill a form, ship a static site or hand it to any AI agent." },
-      { property: "og:title", content: "Portfolio Builder" },
-      { property: "og:description", content: "Open-source portfolio builder — pick a template, fill a form, ship." },
+      { title: "Portfolio Builder — pick a template, fill a form, ship your site" },
+      { name: "description", content: "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT." },
+      { property: "og:title", content: "Portfolio Builder — pick a template, fill a form, ship your site" },
+      { property: "og:description", content: "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Portfolio Builder — pick a template, fill a form, ship your site" },
+      { name: "twitter:description", content: "Open-source portfolio builder. Pick from 10+ templates, fill one form, download a static site or hand it to any AI coding agent. MIT." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb4e89f4-2fee-4f1a-bbf9-957636dd91a4" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb4e89f4-2fee-4f1a-bbf9-957636dd91a4" },
     ],
     links: [
       {
