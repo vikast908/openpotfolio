@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TopicsRouteImport } from './routes/topics'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AboutRouteImport } from './routes/about'
@@ -16,6 +17,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PreviewTemplateIdRouteImport } from './routes/preview.$templateId'
 import { Route as BuildTemplateIdRouteImport } from './routes/build.$templateId'
 
+const TopicsRoute = TopicsRouteImport.update({
+  id: '/topics',
+  path: '/topics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
   path: '/templates',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/templates': typeof TemplatesRoute
+  '/topics': typeof TopicsRoute
   '/build/$templateId': typeof BuildTemplateIdRoute
   '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/templates': typeof TemplatesRoute
+  '/topics': typeof TopicsRoute
   '/build/$templateId': typeof BuildTemplateIdRoute
   '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/templates': typeof TemplatesRoute
+  '/topics': typeof TopicsRoute
   '/build/$templateId': typeof BuildTemplateIdRoute
   '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/sitemap.xml'
     | '/templates'
+    | '/topics'
     | '/build/$templateId'
     | '/preview/$templateId'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/sitemap.xml'
     | '/templates'
+    | '/topics'
     | '/build/$templateId'
     | '/preview/$templateId'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/sitemap.xml'
     | '/templates'
+    | '/topics'
     | '/build/$templateId'
     | '/preview/$templateId'
   fileRoutesById: FileRoutesById
@@ -104,12 +116,20 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TemplatesRoute: typeof TemplatesRoute
+  TopicsRoute: typeof TopicsRoute
   BuildTemplateIdRoute: typeof BuildTemplateIdRoute
   PreviewTemplateIdRoute: typeof PreviewTemplateIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/topics': {
+      id: '/topics'
+      path: '/topics'
+      fullPath: '/topics'
+      preLoaderRoute: typeof TopicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/templates': {
       id: '/templates'
       path: '/templates'
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TemplatesRoute: TemplatesRoute,
+  TopicsRoute: TopicsRoute,
   BuildTemplateIdRoute: BuildTemplateIdRoute,
   PreviewTemplateIdRoute: PreviewTemplateIdRoute,
 }
