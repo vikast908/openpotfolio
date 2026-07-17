@@ -1,7 +1,13 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme, ALL_MOTION_PRESETS } from "./types";
+import { esc, renderWithTheme } from "./types";
 import type { PortfolioConfig } from "@/lib/portfolio/types";
-import type { TemplateDefaults } from "@/lib/portfolio/theme";
+import { socialsLinks, emailLinkHtml, projectTagsHtml } from "./shared";
+import {
+  makeSuite,
+  baseDefaultsFromPalette,
+  type SuitePalette,
+  type LayoutSpec,
+} from "./suite-factory";
 
 /**
  * Apple-inspired template suite.
@@ -15,16 +21,7 @@ import type { TemplateDefaults } from "@/lib/portfolio/theme";
  *  - Everything themable through the resolved CSS variables.
  */
 
-type Palette = {
-  key: string;
-  name: string;
-  swatch: [string, string, string];
-  colors: TemplateDefaults["colors"];
-  headingFont: string;
-  bodyFont: string;
-  headingWeight: 400 | 500 | 600 | 700 | 800;
-  radius: number;
-};
+type Palette = SuitePalette;
 
 const PALETTES: Palette[] = [
   {
@@ -210,18 +207,12 @@ const PALETTES: Palette[] = [
 ];
 
 // ─── shared fragment helpers ──────────────────────────────────────────────
-const socials = (c: PortfolioConfig) =>
-  c.socials.map((s) => `<a href="${esc(s.url)}" data-hover>${esc(s.label)}</a>`).join("");
-const emailLink = (c: PortfolioConfig) =>
-  c.email ? `<a href="mailto:${esc(c.email)}" data-hover>${esc(c.email)}</a>` : "";
-const tags = (t: string[]) => t.map((x) => `<em>${esc(x)}</em>`).join("");
-
-function baseDefaults(p: Palette): TemplateDefaults {
-  return {
-    colors: p.colors,
-    typography: { headingFont: p.headingFont, bodyFont: p.bodyFont, scale: 1, headingWeight: p.headingWeight, tracking: "tight", radius: p.radius },
-    motion: { preset: "stagger-rise", intensity: 1, hover: "lift" },
-  };
+const socials = (c: PortfolioConfig) => socialsLinks(c);
+const emailLink = (c: PortfolioConfig) => emailLinkHtml(c);
+const tags = (t: string[]) => projectTagsHtml(t);
+const MOTION = { preset: "stagger-rise", intensity: 1, hover: "lift" } as const;
+function baseDefaults(p: Palette) {
+  return baseDefaultsFromPalette(p, MOTION);
 }
 
 // ─── LAYOUT A · Keynote ───────────────────────────────────────────────────
@@ -489,8 +480,6 @@ h2{font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:var(--mut
 }
 
 // ─── factory ──────────────────────────────────────────────────────────────
-type LayoutSpec = { key: string; label: string; tagline: string; tags: string[]; render: (p: Palette) => Template["render"] };
-
 const LAYOUTS: LayoutSpec[] = [
   { key: "keynote", label: "Keynote", tagline: "Cinematic hero, translucent chrome, calm bands.", tags: ["hero","apple","clean"], render: renderKeynote },
   { key: "rail",    label: "Rail",    tagline: "Sticky identity rail, long reading column.",    tags: ["editorial","rail"],   render: renderRail },
@@ -499,21 +488,9 @@ const LAYOUTS: LayoutSpec[] = [
   { key: "focus",   label: "Focus",   tagline: "Full-viewport hero, then sparse chapters.",     tags: ["cinematic","hero"],   render: renderFocus },
 ];
 
-export const appleTemplates: Template[] = LAYOUTS.flatMap((layout) =>
-  PALETTES.map<Template>((p) => ({
-    meta: {
-      id: `apple-${layout.key}-${p.key}`,
-      name: `${layout.label} · ${p.name}`,
-      tagline: layout.tagline,
-      tags: [...layout.tags, p.key],
-      swatch: p.swatch,
-    },
-    defaults: baseDefaults(p),
-    capabilities: {
-      colorRoles: ["background","surface","text","muted","border","accent","accentText"],
-      motionPresets: ALL_MOTION_PRESETS,
-      supports: { scale: true, radius: true, tracking: true, weight: true, hover: true },
-    },
-    render: layout.render(p),
-  })),
-);
+export const appleTemplates: Template[] = makeSuite({
+  idPrefix: "apple",
+  layouts: LAYOUTS,
+  palettes: PALETTES,
+  motionDefaults: { preset: "stagger-rise", intensity: 1, hover: "lift" },
+});

@@ -1,23 +1,20 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme, ALL_MOTION_PRESETS } from "./types";
+import { esc, renderWithTheme } from "./types";
 import type { PortfolioConfig } from "@/lib/portfolio/types";
-import type { TemplateDefaults } from "@/lib/portfolio/theme";
+import { socialsLinks, emailLinkHtml, projectTagsHtml } from "./shared";
+import {
+  makeSuite,
+  baseDefaultsFromPalette,
+  type SuitePalette,
+  type LayoutSpec,
+} from "./suite-factory";
 
 /**
  * Editorial suite - magazine, brutalist, Swiss, zine, poster.
  * 5 archetypes × 8 palettes = 40 templates. All themable via CSS vars.
  */
 
-type Palette = {
-  key: string;
-  name: string;
-  swatch: [string, string, string];
-  colors: TemplateDefaults["colors"];
-  headingFont: string;
-  bodyFont: string;
-  headingWeight: 400 | 500 | 600 | 700 | 800 | 900;
-  radius: number;
-};
+type Palette = SuitePalette;
 
 const PALETTES: Palette[] = [
   {
@@ -184,18 +181,13 @@ const PALETTES: Palette[] = [
   },
 ];
 
-const socials = (c: PortfolioConfig) =>
-  c.socials.map((s) => `<a href="${esc(s.url)}" data-hover>${esc(s.label)}</a>`).join("");
-const emailLink = (c: PortfolioConfig) =>
-  c.email ? `<a href="mailto:${esc(c.email)}" data-hover>${esc(c.email)}</a>` : "";
-const tags = (t: string[]) => t.map((x) => `<em>${esc(x)}</em>`).join("");
-
-function baseDefaults(p: Palette): TemplateDefaults {
-  return {
-    colors: p.colors,
-    typography: { headingFont: p.headingFont, bodyFont: p.bodyFont, scale: 1, headingWeight: p.headingWeight, tracking: "tight", radius: p.radius },
-    motion: { preset: "rise", intensity: 1, hover: "underline" },
-  };
+// ─── shared fragment helpers ──────────────────────────────────────────────
+const socials = (c: PortfolioConfig) => socialsLinks(c);
+const emailLink = (c: PortfolioConfig) => emailLinkHtml(c);
+const tags = (t: string[]) => projectTagsHtml(t);
+const MOTION = { preset: "rise", intensity: 1, hover: "underline" } as const;
+function baseDefaults(p: Palette) {
+  return baseDefaultsFromPalette(p, MOTION);
 }
 
 // ─── LAYOUT A · Magazine ──────────────────────────────────────────────────
@@ -512,7 +504,6 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border)}
 }
 
 // ─── factory ──────────────────────────────────────────────────────────────
-type LayoutSpec = { key: string; label: string; tagline: string; tags: string[]; render: (p: Palette) => Template["render"] };
 const LAYOUTS: LayoutSpec[] = [
   { key: "magazine",  label: "Magazine",  tagline: "Editorial masthead, feature story, story grid.", tags: ["editorial","magazine","serif"], render: renderMagazine },
   { key: "brutalist", label: "Brutalist", tagline: "Heavy borders, numbered blocks, raw hierarchy.",  tags: ["brutalist","bold","raw"],       render: renderBrutalist },
@@ -521,21 +512,9 @@ const LAYOUTS: LayoutSpec[] = [
   { key: "poster",    label: "Poster",    tagline: "Full-bleed name-as-artwork, marquee ticker.",     tags: ["poster","display","cinematic"], render: renderPoster },
 ];
 
-export const editorialTemplates: Template[] = LAYOUTS.flatMap((layout) =>
-  PALETTES.map<Template>((p) => ({
-    meta: {
-      id: `ed-${layout.key}-${p.key}`,
-      name: `${layout.label} · ${p.name}`,
-      tagline: layout.tagline,
-      tags: [...layout.tags, p.key],
-      swatch: p.swatch,
-    },
-    defaults: baseDefaults(p),
-    capabilities: {
-      colorRoles: ["background","surface","text","muted","border","accent","accentText"],
-      motionPresets: ALL_MOTION_PRESETS,
-      supports: { scale: true, radius: true, tracking: true, weight: true, hover: true },
-    },
-    render: layout.render(p),
-  })),
-);
+export const editorialTemplates: Template[] = makeSuite({
+  idPrefix: "ed",
+  layouts: LAYOUTS,
+  palettes: PALETTES,
+  motionDefaults: { preset: "rise", intensity: 1, hover: "underline" },
+});

@@ -56,7 +56,19 @@ export function ExportDialog({ config }: { config: PortfolioConfig }) {
               A zip with <code>index.html</code>, <code>portfolio.json</code>, MIT <code>LICENSE</code>, and a README.
               Drop it on any static host.
             </p>
-            <Button onClick={() => downloadZip(config)} className="w-full">
+            <Button
+              onClick={async () => {
+                try {
+                  await downloadZip(config);
+                } catch (err) {
+                  console.error(err);
+                  window.alert(
+                    err instanceof Error ? err.message : "Export failed. Check the template id.",
+                  );
+                }
+              }}
+              className="w-full"
+            >
               <Download className="h-4 w-4 mr-2" /> Download .zip
             </Button>
           </TabsContent>

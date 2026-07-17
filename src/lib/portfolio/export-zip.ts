@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import type { PortfolioConfig } from "./types";
-import { getTemplateOrFallback } from "@/templates/registry";
+import { getTemplate } from "@/templates/registry";
 
 const MIT = (year: number, owner: string) => `MIT License
 
@@ -20,7 +20,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
 `;
 
 export async function downloadZip(config: PortfolioConfig): Promise<void> {
-  const template = getTemplateOrFallback(config.templateId);
+  const template = getTemplate(config.templateId);
+  if (!template) {
+    throw new Error(`Unknown template: ${config.templateId}`);
+  }
   const { html } = template.render(config);
 
   const zip = new JSZip();

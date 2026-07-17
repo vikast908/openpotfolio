@@ -6,6 +6,7 @@ import type {
   PortfolioTypography,
 } from "./types";
 import { getFont } from "./fonts";
+import { hexLuminance } from "./color";
 
 export type ResolvedTheme = {
   colors: PortfolioColors;
@@ -40,19 +41,6 @@ const trackingMap: Record<PortfolioTypography["tracking"], string> = {
   normal: "0",
   wide: "0.06em",
 };
-
-/** Rough luminance from a hex color (0..1). */
-function hexLuminance(hex: string): number {
-  const h = hex.replace("#", "");
-  const full = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
-  const n = parseInt(full, 16);
-  if (Number.isNaN(n)) return 1;
-  const r = ((n >> 16) & 255) / 255;
-  const g = ((n >> 8) & 255) / 255;
-  const b = (n & 255) / 255;
-  const f = (v: number) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
-  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
-}
 
 /** CSS block that puts theme values on :root as custom properties and applies the base body font. */
 export function themeCssVars(t: ResolvedTheme): string {
@@ -112,10 +100,10 @@ export function motionCss(m: PortfolioMotion): string {
       anim = `animation:anim-in ${dur}ms cubic-bezier(0.23,1,0.32,1) both;animation-delay:calc(min(var(--i,0), 6) * ${Math.round(40 * intensity)}ms)`;
       break;
     case "blur-in":
-      // Only blur text nodes - cheaper on Safari and preserves image/border fidelity.
+      // Blur on the animated element; reduced-motion falls back to plain fade below.
       kf = `@keyframes anim-in-blur{from{opacity:0;filter:blur(4px)}to{opacity:1;filter:blur(0)}}
 @keyframes anim-in{from{opacity:0}to{opacity:1}}`;
-      anim = `animation:anim-in ${dur}ms cubic-bezier(0.23,1,0.32,1) both`;
+      anim = `animation:anim-in-blur ${dur}ms cubic-bezier(0.23,1,0.32,1) both`;
       break;
   }
 
@@ -149,7 +137,7 @@ export function motionCss(m: PortfolioMotion): string {
   const base = kf && anim ? `${kf}\n[data-anim]{${anim}}` : "";
   // Reduced motion: keep opacity/color changes for comprehension; drop movement + blur.
   const reduced = `@media (prefers-reduced-motion:reduce){
-  [data-anim]{animation:anim-in 200ms ease-out both!important}
+  [data-anim]{animation:anim-in 200ms ease-out both!important;filter:none!important}
   @keyframes anim-in{from{opacity:0}to{opacity:1}}
   [data-hover]:hover{transform:none!important}
   [data-hover]::after,[data-hover]::before{transition:opacity 160ms ease-out!important}
@@ -163,10 +151,10 @@ export function themeStyleBlock(t: ResolvedTheme): string {
   return `${themeCssVars(t)}\n${motionCss(t.motion)}`;
 }
 
-export function withResolvedTheme(
+// Re-export for callers that only need theme + config together occasionally.
+export function resolveThemeForConfig(
   config: PortfolioConfig,
   defaults: TemplateDefaults,
-): { config: PortfolioConfig; theme: ResolvedTheme } {
-  const theme = resolveTheme(config.theme, defaults);
-  return { config, theme };
+): ResolvedTheme {
+  return resolveTheme(config.theme, defaults);
 }

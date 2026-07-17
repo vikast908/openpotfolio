@@ -1,5 +1,5 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme, ALL_MOTION_PRESETS, isKind } from "./types";
+import { esc, renderWithTheme, ALL_MOTION_PRESETS, isKind, CORE_CONTENT } from "./types";
 
 const template: Template = {
   meta: {
@@ -22,6 +22,7 @@ const template: Template = {
     fontFilter: isKind("mono"),
     motionPresets: ["none","fade"],
     supports: { scale: true, radius: false, tracking: false, weight: true, hover: true },
+    content: CORE_CONTENT,
   },
   render(config) {
     const body = `

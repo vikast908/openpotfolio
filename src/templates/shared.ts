@@ -1,10 +1,30 @@
 import type { PortfolioConfig } from "@/lib/portfolio/types";
 import { esc } from "./types";
 
-export function socialsHtml(config: PortfolioConfig, sep = " · "): string {
+export function socialsHtml(
+  config: PortfolioConfig,
+  sep = " · ",
+  attrs = 'target="_blank" rel="noopener"',
+): string {
   return config.socials
-    .map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`)
+    .map((s) => `<a href="${esc(s.url)}" ${attrs}>${esc(s.label)}</a>`)
     .join(sep);
+}
+
+/** Social links with data-hover (suite layouts). */
+export function socialsLinks(config: PortfolioConfig, join = ""): string {
+  return config.socials
+    .map((s) => `<a href="${esc(s.url)}" data-hover>${esc(s.label)}</a>`)
+    .join(join);
+}
+
+export function emailLinkHtml(
+  config: PortfolioConfig,
+  attrs = 'data-hover',
+): string {
+  return config.email
+    ? `<a href="mailto:${esc(config.email)}" ${attrs}>${esc(config.email)}</a>`
+    : "";
 }
 
 export function skillsHtml(config: PortfolioConfig, tag = "span"): string {

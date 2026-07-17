@@ -1,5 +1,5 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme, ALL_MOTION_PRESETS } from "./types";
+import { esc, renderWithTheme, ALL_MOTION_PRESETS, CORE_CONTENT } from "./types";
 
 const template: Template = {
   meta: { id:"writer", name:"Writer / Journalist", tagline:"Serif, long-form, editorial.", tags:["writer","editorial"], swatch:["#faf7f2","#1a1a1a","#8b1e1e"] },
@@ -12,6 +12,7 @@ const template: Template = {
     colorRoles: ["background","text","muted","border","accent"],
     motionPresets: ["none","fade","rise"],
     supports: { scale:true, radius:false, tracking:true, weight:true, hover:true },
+    content: CORE_CONTENT,
   },
   render(config) {
     const body = `

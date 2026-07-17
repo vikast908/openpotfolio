@@ -4,6 +4,19 @@ import type { TemplateDefaults, ResolvedTheme } from "@/lib/portfolio/theme";
 import { resolveTheme, themeStyleBlock, themeFontKeys } from "@/lib/portfolio/theme";
 import { fontLinkTags, FONTS, type FontEntry } from "@/lib/portfolio/fonts";
 
+/** Which content sections the form exposes and the template is expected to render. */
+export type ContentCapabilities = {
+  caseStudies: boolean;
+  skillGroups: boolean;
+  achievements: boolean;
+  testimonials: boolean;
+  writing: boolean;
+  /** Career story, philosophy, industries */
+  story: boolean;
+  /** resume, cta, workPreference, strengths */
+  cta: boolean;
+};
+
 export type TemplateCapabilities = {
   colorRoles: PortfolioColorRole[];
   fontFilter?: (f: FontEntry) => boolean;
@@ -15,6 +28,7 @@ export type TemplateCapabilities = {
     weight: boolean;
     hover: boolean;
   };
+  content: ContentCapabilities;
 };
 
 export type TemplateMeta = {
@@ -51,6 +65,36 @@ export const ALL_MOTION_PRESETS: MotionPreset[] = [
   "stagger-rise",
   "blur-in",
 ];
+
+/** Core templates: basics + projects + skills + experience + socials only. */
+export const CORE_CONTENT: ContentCapabilities = {
+  caseStudies: false,
+  skillGroups: false,
+  achievements: false,
+  testimonials: false,
+  writing: false,
+  story: false,
+  cta: false,
+};
+
+/** PM / consultant-style templates that render rich portfolio sections. */
+export const RICH_CONTENT: ContentCapabilities = {
+  caseStudies: true,
+  skillGroups: true,
+  achievements: true,
+  testimonials: true,
+  writing: true,
+  story: true,
+  cta: true,
+};
+
+export const FULL_STYLE_SUPPORTS: TemplateCapabilities["supports"] = {
+  scale: true,
+  radius: true,
+  tracking: true,
+  weight: true,
+  hover: true,
+};
 
 export function isKind(kind: FontEntry["kind"]) {
   return (f: FontEntry) => f.kind === kind || f.kind === "display";

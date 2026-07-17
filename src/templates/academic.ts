@@ -1,5 +1,5 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme } from "./types";
+import { esc, renderWithTheme, CORE_CONTENT } from "./types";
 
 const template: Template = {
   meta: { id:"academic", name:"Academic / Researcher", tagline:"Publications-first, sober serif.", tags:["academic","researcher"], swatch:["#ffffff","#2c2c2c","#8b0000"] },
@@ -12,6 +12,7 @@ const template: Template = {
     colorRoles: ["background","text","muted","border","accent"],
     motionPresets: ["none","fade"],
     supports: { scale:true, radius:false, tracking:false, weight:true, hover:true },
+    content: CORE_CONTENT,
   },
   render(config) {
     const body = `

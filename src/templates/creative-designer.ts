@@ -1,5 +1,5 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme, ALL_MOTION_PRESETS } from "./types";
+import { esc, renderWithTheme, ALL_MOTION_PRESETS, CORE_CONTENT } from "./types";
 
 const template: Template = {
   meta: {
@@ -15,9 +15,11 @@ const template: Template = {
     motion: { preset:"rise", intensity:1, hover:"lift" },
   },
   capabilities: {
+    
     colorRoles: ["background","surface","text","muted","border","accent","accentText"],
     motionPresets: ALL_MOTION_PRESETS,
     supports: { scale:true, radius:true, tracking:true, weight:true, hover:true },
+    content: CORE_CONTENT,
   },
   render(config) {
     const body = `

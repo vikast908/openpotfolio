@@ -35,6 +35,11 @@ export function getTemplate(id: string): Template | undefined {
   return templates.find((t) => t.meta.id === id);
 }
 
+/**
+ * Prefer {@link getTemplate} in user-facing render/export paths so unknown
+ * ids fail closed. This helper remains for non-critical UI (e.g. thumbnails)
+ * where a placeholder is acceptable.
+ */
 export function getTemplateOrFallback(id: string): Template {
   return getTemplate(id) ?? templates[0];
 }

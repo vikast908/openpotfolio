@@ -1,5 +1,5 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme, ALL_MOTION_PRESETS } from "./types";
+import { esc, renderWithTheme, ALL_MOTION_PRESETS, CORE_CONTENT } from "./types";
 
 const template: Template = {
   meta: { id:"freelancer", name:"Freelancer", tagline:"Services + pricing, ready to hire.", tags:["freelancer","services"], swatch:["#0f172a","#facc15","#f8fafc"] },
@@ -12,6 +12,7 @@ const template: Template = {
     colorRoles: ["background","surface","text","muted","border","accent","accentText"],
     motionPresets: ALL_MOTION_PRESETS,
     supports: { scale:true, radius:true, tracking:true, weight:true, hover:true },
+    content: CORE_CONTENT,
   },
   render(config) {
     const initials = config.name.split(" ").map(n=>n[0]).slice(0,2).join("");

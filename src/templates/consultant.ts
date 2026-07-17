@@ -1,5 +1,5 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme, ALL_MOTION_PRESETS } from "./types";
+import { esc, renderWithTheme, ALL_MOTION_PRESETS, RICH_CONTENT } from "./types";
 import {
   orderedProjects, caseStudyHtml, aboutHtml, strengthsHtml, ctaRowHtml,
   skillsBlockHtml, achievementsHtml, testimonialsHtml, writingHtml,
@@ -17,6 +17,7 @@ const template: Template = {
     colorRoles: ["background","surface","text","muted","border","accent","accentText"],
     motionPresets: ALL_MOTION_PRESETS,
     supports: { scale:true, radius:true, tracking:true, weight:true, hover:true },
+    content: RICH_CONTENT,
   },
   render(config) {
     const body = `

@@ -1,5 +1,5 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme, ALL_MOTION_PRESETS } from "./types";
+import { esc, renderWithTheme, ALL_MOTION_PRESETS, CORE_CONTENT } from "./types";
 
 const template: Template = {
   meta: { id:"photographer", name:"Photographer", tagline:"Masonry gallery, quiet chrome.", tags:["photographer","gallery"], swatch:["#111","#f5f5f0","#c9a86a"] },
@@ -9,9 +9,11 @@ const template: Template = {
     motion: { preset:"blur-in", intensity:1, hover:"none" },
   },
   capabilities: {
+    
     colorRoles: ["background","surface","text","muted","border","accent"],
     motionPresets: ALL_MOTION_PRESETS,
     supports: { scale:true, radius:false, tracking:true, weight:true, hover:true },
+    content: CORE_CONTENT,
   },
   render(config) {
     const ars = ["3/4","4/5","1/1","5/7","3/2"];

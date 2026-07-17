@@ -1,4 +1,7 @@
+import { parseWireConfig } from "./schema";
+
 export type PortfolioProject = {
+  id?: string;
   title: string;
   description: string;
   url?: string;
@@ -6,34 +9,51 @@ export type PortfolioProject = {
   tags: string[];
   featured?: boolean;
   // Case study fields (all optional; templates render only when present)
-  role?: string;           // Your role on the project
-  team?: string;           // Team composition
-  timeline?: string;       // e.g. "Q1 2024 - Q3 2024"
-  problem?: string;        // Problem / context
-  research?: string;       // Research & evidence
-  goals?: string;          // Goals & metrics targeted
-  constraints?: string;    // Constraints
-  strategy?: string;       // Strategy & decisions
-  execution?: string;      // Execution / what shipped
-  results?: string;        // Outcomes (quantified)
-  metrics?: { label: string; value: string }[]; // e.g. [{label:"Activation",value:"+38%"}]
-  challenges?: string;     // Challenges & tradeoffs
-  lessons?: string;        // Lessons / what I'd do differently
+  role?: string;
+  team?: string;
+  timeline?: string;
+  problem?: string;
+  research?: string;
+  goals?: string;
+  constraints?: string;
+  strategy?: string;
+  execution?: string;
+  results?: string;
+  metrics?: { label: string; value: string }[];
+  challenges?: string;
+  lessons?: string;
 };
 
 export type PortfolioExperience = {
+  id?: string;
   role: string;
   company: string;
   period: string;
   summary?: string;
 };
 
-export type PortfolioSocial = { label: string; url: string };
+export type PortfolioSocial = { id?: string; label: string; url: string };
 
-export type PortfolioSkillGroup = { label: string; items: string[] };
-export type PortfolioAchievement = { title: string; detail?: string; year?: string };
-export type PortfolioTestimonial = { quote: string; author: string; role?: string };
-export type PortfolioWriting = { title: string; url?: string; kind?: string; summary?: string };
+export type PortfolioSkillGroup = { id?: string; label: string; items: string[] };
+export type PortfolioAchievement = {
+  id?: string;
+  title: string;
+  detail?: string;
+  year?: string;
+};
+export type PortfolioTestimonial = {
+  id?: string;
+  quote: string;
+  author: string;
+  role?: string;
+};
+export type PortfolioWriting = {
+  id?: string;
+  title: string;
+  url?: string;
+  kind?: string;
+  summary?: string;
+};
 
 export type PortfolioColorRole =
   | "background"
@@ -84,18 +104,18 @@ export type PortfolioConfig = {
   experience: PortfolioExperience[];
   theme: PortfolioTheme;
   templateId: string;
-  // Optional PM/rich-portfolio fields - all templates render only what's present.
+  // Optional PM/rich-portfolio fields - templates declare content capabilities.
   resumeUrl?: string;
-  workPreference?: string;      // e.g. "Open to full-time PM roles, EU/remote"
-  cta?: string;                 // e.g. "Book a 20-min intro call"
-  strengths?: string[];         // 2-4 key strengths / domains
-  story?: string;               // Career story (About Me)
-  philosophy?: string;          // Product philosophy
-  industries?: string[];        // Industries / domains
-  skillGroups?: PortfolioSkillGroup[]; // Grouped capabilities
+  workPreference?: string;
+  cta?: string;
+  strengths?: string[];
+  story?: string;
+  philosophy?: string;
+  industries?: string[];
+  skillGroups?: PortfolioSkillGroup[];
   achievements?: PortfolioAchievement[];
   testimonials?: PortfolioTestimonial[];
-  writing?: PortfolioWriting[]; // Articles, talks, frameworks
+  writing?: PortfolioWriting[];
 };
 
 export const defaultConfig: PortfolioConfig = {
@@ -106,12 +126,13 @@ export const defaultConfig: PortfolioConfig = {
   location: "London, UK",
   email: "ada@example.com",
   socials: [
-    { label: "GitHub", url: "https://github.com/ada" },
-    { label: "Twitter", url: "https://twitter.com/ada" },
+    { id: "social-github", label: "GitHub", url: "https://github.com/ada" },
+    { id: "social-twitter", label: "Twitter", url: "https://twitter.com/ada" },
   ],
   skills: ["TypeScript", "React", "Systems design", "Technical writing"],
   projects: [
     {
+      id: "proj-notes",
       title: "Note Engine",
       description: "A local-first notes app with backlinks and full-text search.",
       url: "https://example.com/notes",
@@ -119,6 +140,7 @@ export const defaultConfig: PortfolioConfig = {
       tags: ["Product", "TypeScript"],
     },
     {
+      id: "proj-blog",
       title: "Analytical Blog",
       description: "Essays on programming languages and mathematical machines.",
       url: "https://example.com/blog",
@@ -128,6 +150,7 @@ export const defaultConfig: PortfolioConfig = {
   ],
   experience: [
     {
+      id: "exp-ae",
       role: "Senior Engineer",
       company: "Analytical Engines",
       period: "2021 - Now",
@@ -146,33 +169,92 @@ export const defaultConfig: PortfolioConfig = {
     "Small bets, sharp evidence, honest retros. The best PMs make the team faster at learning, not just faster at shipping.",
   industries: ["Fintech", "Developer tools", "Marketplaces"],
   skillGroups: [
-    { label: "Discovery & research", items: ["User interviews", "JTBD", "Opportunity trees"] },
-    { label: "Strategy", items: ["Roadmapping", "OKRs", "Positioning"] },
-    { label: "Analytics", items: ["SQL", "Amplitude", "Experiment design"] },
-    { label: "Leadership", items: ["Cross-functional facilitation", "Coaching", "Written comms"] },
+    {
+      id: "sg-discovery",
+      label: "Discovery & research",
+      items: ["User interviews", "JTBD", "Opportunity trees"],
+    },
+    { id: "sg-strategy", label: "Strategy", items: ["Roadmapping", "OKRs", "Positioning"] },
+    {
+      id: "sg-analytics",
+      label: "Analytics",
+      items: ["SQL", "Amplitude", "Experiment design"],
+    },
+    {
+      id: "sg-leadership",
+      label: "Leadership",
+      items: ["Cross-functional facilitation", "Coaching", "Written comms"],
+    },
   ],
   achievements: [
-    { title: "Grew activation 38%", detail: "Rebuilt onboarding around a single aha moment", year: "2024" },
-    { title: "Shipped v2 platform", detail: "Cut integration time from 2 weeks to 2 days", year: "2023" },
+    {
+      id: "ach-activation",
+      title: "Grew activation 38%",
+      detail: "Rebuilt onboarding around a single aha moment",
+      year: "2024",
+    },
+    {
+      id: "ach-platform",
+      title: "Shipped v2 platform",
+      detail: "Cut integration time from 2 weeks to 2 days",
+      year: "2023",
+    },
   ],
   testimonials: [
-    { quote: "The clearest product thinker I've worked with. Turns fog into a plan.", author: "Jamie Chen", role: "VP Engineering, Analytical Engines" },
+    {
+      id: "tst-jamie",
+      quote: "The clearest product thinker I've worked with. Turns fog into a plan.",
+      author: "Jamie Chen",
+      role: "VP Engineering, Analytical Engines",
+    },
   ],
   writing: [
-    { title: "The evidence ladder for PMs", url: "https://example.com/evidence-ladder", kind: "Essay" },
-    { title: "Discovery without theatre", url: "https://example.com/discovery", kind: "Talk" },
+    {
+      id: "wrt-ladder",
+      title: "The evidence ladder for PMs",
+      url: "https://example.com/evidence-ladder",
+      kind: "Essay",
+    },
+    {
+      id: "wrt-discovery",
+      title: "Discovery without theatre",
+      url: "https://example.com/discovery",
+      kind: "Talk",
+    },
   ],
 };
 
-export function withDefaults(partial: Partial<PortfolioConfig> & Record<string, unknown>): PortfolioConfig {
+function newId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `id-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
+function withIds<T extends { id?: string }>(items: T[]): (T & { id: string })[] {
+  return items.map((item) => ({ ...item, id: item.id || newId() }));
+}
+
+/** Normalize partial / wire payloads into a full PortfolioConfig (validates + assigns list ids). */
+export function withDefaults(input: unknown): PortfolioConfig {
+  const partial = parseWireConfig(input) as Record<string, unknown>;
+
   const rawTheme = (partial.theme ?? {}) as Record<string, unknown>;
-  // Legacy shape: { accent: '#hex', font: 'sans'|'serif'|'mono' }
-  const legacyAccent = typeof rawTheme.accent === "string" ? (rawTheme.accent as string) : undefined;
+  const legacyAccent = typeof rawTheme.accent === "string" ? rawTheme.accent : undefined;
   const legacyFont =
     typeof rawTheme.font === "string" ? (rawTheme.font as "sans" | "serif" | "mono") : undefined;
-  const modernColors = (rawTheme.colors as Partial<PortfolioColors>) ?? {};
-  const modernTypography = (rawTheme.typography as Partial<PortfolioTypography>) ?? {};
-  const modernMotion = (rawTheme.motion as Partial<PortfolioMotion>) ?? {};
+  const modernColors =
+    rawTheme.colors && typeof rawTheme.colors === "object"
+      ? (rawTheme.colors as Partial<PortfolioColors>)
+      : {};
+  const modernTypography =
+    rawTheme.typography && typeof rawTheme.typography === "object"
+      ? (rawTheme.typography as Partial<PortfolioTypography>)
+      : {};
+  const modernMotion =
+    rawTheme.motion && typeof rawTheme.motion === "object"
+      ? (rawTheme.motion as Partial<PortfolioMotion>)
+      : {};
 
   const theme: PortfolioTheme = {
     colors: {
@@ -180,8 +262,12 @@ export function withDefaults(partial: Partial<PortfolioConfig> & Record<string, 
       ...modernColors,
     },
     typography: {
-      ...(legacyFont === "serif" ? { headingFont: "instrument-serif", bodyFont: "iowan" } : {}),
-      ...(legacyFont === "mono" ? { headingFont: "jetbrains-mono", bodyFont: "jetbrains-mono" } : {}),
+      ...(legacyFont === "serif"
+        ? { headingFont: "instrument-serif", bodyFont: "iowan" }
+        : {}),
+      ...(legacyFont === "mono"
+        ? { headingFont: "jetbrains-mono", bodyFont: "jetbrains-mono" }
+        : {}),
       ...(legacyFont === "sans" ? { headingFont: "inter", bodyFont: "inter" } : {}),
       ...modernTypography,
     },
@@ -192,9 +278,41 @@ export function withDefaults(partial: Partial<PortfolioConfig> & Record<string, 
     ...defaultConfig,
     ...(partial as Partial<PortfolioConfig>),
     theme,
-    socials: partial.socials ?? defaultConfig.socials,
-    skills: partial.skills ?? defaultConfig.skills,
-    projects: partial.projects ?? defaultConfig.projects,
-    experience: partial.experience ?? defaultConfig.experience,
+    socials: withIds(
+      Array.isArray(partial.socials)
+        ? (partial.socials as PortfolioSocial[])
+        : defaultConfig.socials,
+    ),
+    skills: Array.isArray(partial.skills) ? (partial.skills as string[]) : defaultConfig.skills,
+    projects: withIds(
+      Array.isArray(partial.projects)
+        ? (partial.projects as PortfolioProject[])
+        : defaultConfig.projects,
+    ),
+    experience: withIds(
+      Array.isArray(partial.experience)
+        ? (partial.experience as PortfolioExperience[])
+        : defaultConfig.experience,
+    ),
+    skillGroups: withIds(
+      Array.isArray(partial.skillGroups)
+        ? (partial.skillGroups as PortfolioSkillGroup[])
+        : (defaultConfig.skillGroups ?? []),
+    ),
+    achievements: withIds(
+      Array.isArray(partial.achievements)
+        ? (partial.achievements as PortfolioAchievement[])
+        : (defaultConfig.achievements ?? []),
+    ),
+    testimonials: withIds(
+      Array.isArray(partial.testimonials)
+        ? (partial.testimonials as PortfolioTestimonial[])
+        : (defaultConfig.testimonials ?? []),
+    ),
+    writing: withIds(
+      Array.isArray(partial.writing)
+        ? (partial.writing as PortfolioWriting[])
+        : (defaultConfig.writing ?? []),
+    ),
   };
 }

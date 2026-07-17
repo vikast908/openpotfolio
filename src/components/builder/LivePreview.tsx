@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getTemplateOrFallback } from "@/templates/registry";
+import { getTemplate } from "@/templates/registry";
 import type { PortfolioConfig } from "@/lib/portfolio/types";
 
 /**
@@ -28,7 +28,16 @@ export function LivePreview({
   useEffect(() => {
     const frame = iframeRef.current;
     if (!frame) return;
-    const template = getTemplateOrFallback(debounced.templateId);
+
+    const template = getTemplate(debounced.templateId);
+    if (!template) {
+      frame.srcdoc = `<!doctype html><html><body style="font-family:system-ui;padding:2rem;color:#444">
+        <h1>Template not found</h1>
+        <p>Unknown template id: <code>${debounced.templateId}</code></p>
+      </body></html>`;
+      return;
+    }
+
     const { html } = template.render(debounced);
 
     const templateChanged = currentTemplateId.current !== debounced.templateId;
@@ -48,13 +57,11 @@ export function LivePreview({
     }
 
     // Same template, content changed → mutate in place.
-    // Parse the rendered doc so we can extract <body> innerHTML + <style>.
     const parser = new DOMParser();
     const next = parser.parseFromString(html, "text/html");
     const nextStyle = next.querySelector("style")?.textContent ?? "";
     // Strip data-anim on in-place mutations so entrance animations
-    // don't replay on every keystroke while editing. First mount
-    // (needsFullWrite above) still plays them once.
+    // don't replay on every keystroke while editing.
     next.body.querySelectorAll("[data-anim]").forEach((el) => el.removeAttribute("data-anim"));
     const nextBody = next.body.innerHTML;
 

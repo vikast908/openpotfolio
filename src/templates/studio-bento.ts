@@ -1,5 +1,5 @@
 import type { Template } from "./types";
-import { esc, renderWithTheme, ALL_MOTION_PRESETS } from "./types";
+import { esc, renderWithTheme, ALL_MOTION_PRESETS, CORE_CONTENT } from "./types";
 
 const template: Template = {
   meta: { id:"studio-bento", name:"Studio / Bento", tagline:"Multidisciplinary bento grid.", tags:["studio","bento"], swatch:["#fafaf7","#111","#22c55e"] },
@@ -12,6 +12,7 @@ const template: Template = {
     colorRoles: ["background","surface","text","muted","border","accent","accentText"],
     motionPresets: ALL_MOTION_PRESETS,
     supports: { scale:true, radius:true, tracking:true, weight:true, hover:true },
+    content: CORE_CONTENT,
   },
   render(config) {
     const body = `

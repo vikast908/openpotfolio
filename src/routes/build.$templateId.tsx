@@ -7,6 +7,7 @@ import { StylePanel } from "@/components/builder/StylePanel";
 import { LivePreview } from "@/components/builder/LivePreview";
 import { ExportDialog } from "@/components/builder/ExportDialog";
 import { readHashConfig } from "@/lib/portfolio/encode";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/portfolio/draft";
 import { Button } from "@/components/ui/button";
 import { Monitor, Smartphone, RotateCcw } from "lucide-react";
 import {
@@ -32,7 +33,10 @@ export const Route = createFileRoute("/build/$templateId")({
   head: ({ params }) => ({
     meta: [
       { title: `Build - ${params.templateId} · Portfolio Builder` },
-      { name: "description", content: "Fill in your details and watch your portfolio render live." },
+      {
+        name: "description",
+        content: "Fill in your details and watch your portfolio render live.",
+      },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -44,31 +48,59 @@ function Builder() {
   const navigate = useNavigate();
   const template = getTemplate(templateId);
 
-  const [config, setConfig] = useState<PortfolioConfig>(() => ({ ...defaultConfig, templateId }));
+  const [config, setConfig] = useState<PortfolioConfig>(() => ({
+    ...defaultConfig,
+    templateId,
+  }));
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
+  /** Only autosave after hydrate for the active templateId completes. */
   const [hydrated, setHydrated] = useState(false);
 
-  // Hydrate from URL hash or localStorage after mount
+  // Hydrate from URL hash or per-template draft when the route template changes.
   useEffect(() => {
+    let cancelled = false;
+    setHydrated(false);
+
     const fromHash = readHashConfig();
     if (fromHash) {
-      setConfig(withDefaults({ ...fromHash, templateId: fromHash.templateId ?? templateId }));
-    } else {
-      try {
-        const raw = localStorage.getItem(`portfolio-builder:draft:${templateId}`);
-        if (raw) setConfig(withDefaults({ ...JSON.parse(raw), templateId }));
-      } catch {}
+      if (!cancelled) {
+        setConfig(
+          withDefaults({
+            ...fromHash,
+            templateId: fromHash.templateId ?? templateId,
+          }),
+        );
+        setHydrated(true);
+      }
+      return () => {
+        cancelled = true;
+      };
     }
-    setHydrated(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const draft = loadDraft(templateId);
+    if (!cancelled) {
+      if (draft) {
+        setConfig(withDefaults({ ...draft, templateId }));
+      } else {
+        // No draft for this template: keep content, retarget templateId
+        // (template switch preserves edits; first visit uses defaultConfig seed).
+        setConfig((c) =>
+          c.templateId === templateId ? c : withDefaults({ ...c, templateId }),
+        );
+      }
+      setHydrated(true);
+    }
+
+    return () => {
+      cancelled = true;
+    };
   }, [templateId]);
 
-  // Autosave
+  // Autosave — only when hydrated for this templateId and config matches it.
   useEffect(() => {
     if (!hydrated) return;
-    try {
-      localStorage.setItem(`portfolio-builder:draft:${templateId}`, JSON.stringify(config));
-    } catch {}
+    if (config.templateId !== templateId) return;
+    saveDraft(templateId, config);
   }, [config, templateId, hydrated]);
 
   if (!template) {
@@ -77,7 +109,9 @@ function Builder() {
         <h1 className="text-2xl font-semibold">Template not found</h1>
         <p className="mt-2 text-muted-foreground">Try one of these:</p>
         <div className="mt-4">
-          <Link to="/templates" className="text-primary hover:underline">Browse templates →</Link>
+          <Link to="/templates" className="text-primary hover:underline">
+            Browse templates →
+          </Link>
         </div>
       </div>
     );
@@ -95,6 +129,8 @@ function Builder() {
           <Select
             value={templateId}
             onValueChange={(next) => {
+              // Stop autosave until the new template's hydrate effect runs.
+              setHydrated(false);
               setConfig((c) => ({ ...c, templateId: next }));
               navigate({ to: "/build/$templateId", params: { templateId: next } });
             }}
@@ -130,15 +166,17 @@ function Builder() {
               <AlertDialogHeader>
                 <AlertDialogTitle>Reset to example data?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This clears everything you've typed for the <strong>{template.meta.name}</strong> template and restores the default sample content. Your other templates aren't affected.
+                  This clears everything you&apos;ve typed for the{" "}
+                  <strong>{template.meta.name}</strong> template and restores the default
+                  sample content. Your other templates aren&apos;t affected.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Keep my work</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => {
-                    localStorage.removeItem(`portfolio-builder:draft:${templateId}`);
-                    setConfig({ ...defaultConfig, templateId });
+                    clearDraft(templateId);
+                    setConfig(withDefaults({ ...defaultConfig, templateId }));
                   }}
                 >
                   Reset
@@ -152,7 +190,7 @@ function Builder() {
 
       <main className="grid flex-1 grid-cols-1 overflow-hidden lg:grid-cols-[minmax(0,420px)_1fr]">
         <div className="overflow-y-auto border-r p-6">
-          <PortfolioForm config={config} onChange={setConfig} />
+          <PortfolioForm config={config} template={template} onChange={setConfig} />
           <div className="mt-8">
             <StylePanel config={config} template={template} onChange={setConfig} />
           </div>
