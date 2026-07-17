@@ -35,10 +35,18 @@ function About() {
 
         <h2 className="mt-10 text-xl font-semibold">How it works</h2>
         <ol className="mt-3 space-y-2 text-muted-foreground list-decimal pl-6">
-          <li>Pick one of 10 templates spanning developer, designer, writer, photographer, PM, academic, freelancer, consultant, and studio niches.</li>
-          <li>Fill in one form. Every field updates the live preview instantly.</li>
+          <li>Pick from ~300 templates spanning developer, designer, writer, photographer, product manager, academic, freelancer, consultant, and studio niches — including full Apple-inspired and editorial suites.</li>
+          <li>Fill in one form — bio, projects and case studies (with problem/strategy/metrics/lessons), skills, achievements, testimonials, writing, experience, and socials. Every field updates the live preview instantly.</li>
+          <li>Tune every color, font, radius, and motion preset in the style panel — with a live WCAG contrast check as you go.</li>
           <li>Export — as a static HTML/CSS zip, as a shareable link, or as a copy-paste prompt for any AI coding agent.</li>
         </ol>
+
+        <h2 className="mt-10 text-xl font-semibold">Deep customization</h2>
+        <p className="mt-3 text-muted-foreground">
+          Every template renders through a CSS-variable theme system, so you drive it — foreground and background, accent
+          and muted colors, ~68 curated Google Fonts, type scale, letter-spacing, radius, and motion (preset, intensity,
+          hover). One-click palettes get you started; the contrast reporter keeps you accessible.
+        </p>
 
         <h2 className="mt-10 text-xl font-semibold">The AI-agent handoff</h2>
         <p className="mt-3 text-muted-foreground">
