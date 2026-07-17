@@ -108,6 +108,7 @@ function Nav() {
         </Link>
         <nav className="flex items-center gap-4 text-sm">
           <Link to="/templates" className="text-muted-foreground hover:text-foreground">Templates</Link>
+          <Link to="/topics" className="text-muted-foreground hover:text-foreground">Topics</Link>
           <Link to="/about" className="text-muted-foreground hover:text-foreground">About</Link>
           <a
             href="https://github.com/vikast908/openpotfolio"
