@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PreviewTemplateIdRouteImport } from './routes/preview.$templateId'
 import { Route as BuildTemplateIdRouteImport } from './routes/build.$templateId'
@@ -17,6 +18,11 @@ import { Route as BuildTemplateIdRouteImport } from './routes/build.$templateId'
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
   path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const BuildTemplateIdRoute = BuildTemplateIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/templates': typeof TemplatesRoute
   '/build/$templateId': typeof BuildTemplateIdRoute
   '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/templates': typeof TemplatesRoute
   '/build/$templateId': typeof BuildTemplateIdRoute
   '/preview/$templateId': typeof PreviewTemplateIdRoute
@@ -50,18 +58,30 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/templates': typeof TemplatesRoute
   '/build/$templateId': typeof BuildTemplateIdRoute
   '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/templates' | '/build/$templateId' | '/preview/$templateId'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/templates'
+    | '/build/$templateId'
+    | '/preview/$templateId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/templates' | '/build/$templateId' | '/preview/$templateId'
+  to:
+    | '/'
+    | '/about'
+    | '/templates'
+    | '/build/$templateId'
+    | '/preview/$templateId'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/templates'
     | '/build/$templateId'
     | '/preview/$templateId'
@@ -69,6 +89,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   TemplatesRoute: typeof TemplatesRoute
   BuildTemplateIdRoute: typeof BuildTemplateIdRoute
   PreviewTemplateIdRoute: typeof PreviewTemplateIdRoute
@@ -81,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/templates'
       fullPath: '/templates'
       preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -109,6 +137,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   TemplatesRoute: TemplatesRoute,
   BuildTemplateIdRoute: BuildTemplateIdRoute,
   PreviewTemplateIdRoute: PreviewTemplateIdRoute,
