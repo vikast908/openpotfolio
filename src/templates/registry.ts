@@ -6,6 +6,8 @@ import photographer from "./photographer";
 import writer from "./writer";
 import consultant from "./consultant";
 import pm from "./product-manager";
+import pmEditorial from "./pm-editorial";
+import pmApple from "./pm-apple";
 import academic from "./academic";
 import freelancer from "./freelancer";
 import studio from "./studio-bento";
@@ -20,6 +22,8 @@ export const templates: Template[] = [
   writer,
   consultant,
   pm,
+  pmEditorial,
+  pmApple,
   academic,
   freelancer,
   studio,
