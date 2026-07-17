@@ -23,7 +23,10 @@ function About() {
       <header className="border-b">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
           <Link to="/" className="font-semibold">Portfolio<span className="text-primary">.</span>build</Link>
-          <Link to="/templates" className="text-sm text-muted-foreground hover:text-foreground">Templates</Link>
+          <nav className="flex items-center gap-4 text-sm">
+            <Link to="/templates" className="text-muted-foreground hover:text-foreground">Templates</Link>
+            <Link to="/topics" className="text-muted-foreground hover:text-foreground">Topics</Link>
+          </nav>
         </div>
       </header>
       <main className="mx-auto max-w-3xl px-6 py-16 prose prose-slate dark:prose-invert">
