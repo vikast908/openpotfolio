@@ -9,6 +9,7 @@ import pm from "./product-manager";
 import academic from "./academic";
 import freelancer from "./freelancer";
 import studio from "./studio-bento";
+import { appleTemplates } from "./apple-suite";
 
 export const templates: Template[] = [
   minimalDev,
@@ -21,6 +22,7 @@ export const templates: Template[] = [
   academic,
   freelancer,
   studio,
+  ...appleTemplates,
 ];
 
 export function getTemplate(id: string): Template | undefined {
