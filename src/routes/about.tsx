@@ -73,7 +73,7 @@ function About() {
             Browse templates →
           </Link>
           <a
-            href="https://github.com"
+            href="https://github.com/vikast908/openpotfolio"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent"
