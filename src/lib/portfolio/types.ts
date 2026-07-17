@@ -34,7 +34,7 @@ export type PortfolioTypography = {
   headingFont: string;
   bodyFont: string;
   scale: number; // 0.85 – 1.25
-  headingWeight: 400 | 500 | 600 | 700 | 800 | 900;
+  headingWeight: 300 | 400 | 500 | 600 | 700 | 800 | 900;
   tracking: TrackingPreset;
   radius: number; // px
 };
