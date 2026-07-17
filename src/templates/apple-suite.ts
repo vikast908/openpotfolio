@@ -11,14 +11,14 @@ import {
 
 /**
  * Apple-inspired template suite.
- * 5 layout archetypes × 10 palettes = 50 templates.
+ * 5 layout archetypes x 10 palettes = 50 templates.
  *
  * Guiding principles (from Apple's Designing Fluid Interfaces + Principles of Great Design):
- *  - Restraint & clarity. One idea per section, generous whitespace, precise type.
- *  - Depth from translucent materials (backdrop-filter), not heavy borders.
- *  - Motion is fade/rise with soft cubic easing, never bouncy for chrome.
- *  - Type: tight tracking on large display, size-specific hierarchy.
- *  - Everything themable through the resolved CSS variables.
+ * - Restraint & clarity. One idea per section, generous whitespace, precise type.
+ * - Depth from translucent materials (backdrop-filter), not heavy borders.
+ * - Motion is fade/rise with soft cubic easing, never bouncy for chrome.
+ * - Type: tight tracking on large display, size-specific hierarchy.
+ * - Everything themable through the resolved CSS variables.
  */
 
 type Palette = SuitePalette;

@@ -92,7 +92,7 @@ function Templates() {
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Input
-            placeholder="Search templates by name, style, or tag…"
+            placeholder="Search templates by name, style, or tag..."
             value={q}
             onChange={(e) => setQ(e.target.value)}
             className="sm:max-w-sm"

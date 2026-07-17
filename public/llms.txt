@@ -20,10 +20,10 @@ Source: https://github.com/vikast908/openpotfolio
 - Shareable links encode config in the URL fragment: `/build/{templateId}#c=<base64url-json>`.
 - Drafts autosave to `localStorage` under `portfolio-builder:draft:{templateId}` after hydrate.
 - Templates declare `capabilities.content` so the form only edits fields that template renders.
-- Rich sections (case studies, testimonials, …) live in `src/templates/rich-sections.ts` for PM-style templates.
+- Rich sections (case studies, testimonials, ...) live in `src/templates/rich-sections.ts` for PM-style templates.
 
 ## Export
 
-1. Static zip — `index.html`, `portfolio.json`, MIT LICENSE, README.
-2. Shareable link — restores the builder with the same config.
-3. AI agent prompt — open or paste into Lovable, ChatGPT, Claude, or v0.
+1. Static zip - `index.html`, `portfolio.json`, MIT LICENSE, README.
+2. Shareable link - restores the builder with the same config.
+3. AI agent prompt - open or paste into Lovable, ChatGPT, Claude, or v0.

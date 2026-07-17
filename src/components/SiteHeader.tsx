@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Github } from "lucide-react";
+import { GITHUB_REPO_URL } from "@/lib/site";
 
 type Props = {
   /** Center content width class, defaults to max-w-6xl */
@@ -41,7 +42,7 @@ export function SiteHeader({ maxWidthClass = "max-w-6xl", showGithub = true }: P
           </Link>
           {showGithub && (
             <a
-              href="https://github.com/vikast908/openpotfolio"
+              href={GITHUB_REPO_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground"
@@ -72,7 +73,7 @@ export function SiteFooter() {
             About
           </Link>
           <a
-            href="https://github.com/vikast908/openpotfolio"
+            href={GITHUB_REPO_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-foreground"

@@ -73,7 +73,7 @@ export type TrackingPreset = "tight" | "normal" | "wide";
 export type PortfolioTypography = {
   headingFont: string;
   bodyFont: string;
-  scale: number; // 0.85 – 1.25
+  scale: number; // 0.85 - 1.25
   headingWeight: 300 | 400 | 500 | 600 | 700 | 800 | 900;
   tracking: TrackingPreset;
   radius: number; // px
@@ -81,7 +81,7 @@ export type PortfolioTypography = {
 
 export type PortfolioMotion = {
   preset: MotionPreset;
-  intensity: number; // 0 – 1.5
+  intensity: number; // 0 - 1.5
   hover: HoverPreset;
 };
 

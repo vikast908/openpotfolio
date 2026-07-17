@@ -31,7 +31,7 @@ function Landing() {
             </em>
           </h1>
           <p className="mx-auto mt-8 max-w-xl text-lg text-muted-foreground">
-            Pick a template, fill one form, watch it render live. Download a static site — or hand
+            Pick a template, fill one form, watch it render live. Download a static site - or hand
             it to Lovable, ChatGPT, Claude, or v0 to extend.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">

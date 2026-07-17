@@ -33,15 +33,15 @@ capabilities.content: {
 }
 ```
 
-- `CORE_CONTENT` — basics + projects + skills + experience + socials
-- `RICH_CONTENT` — PM / consultant / pm-apple / pm-editorial
+- `CORE_CONTENT` - basics + projects + skills + experience + socials
+- `RICH_CONTENT` - PM / consultant / pm-apple / pm-editorial
 
 Form sections mount only when the active template opts in.
 
 ### Suites
 
-- `apple-suite.ts` — 5 layouts × 30 palettes via `makeSuite`
-- `editorial-suite.ts` — 5 layouts × 27 palettes via `makeSuite`
+- `apple-suite.ts` - 5 layouts x 30 palettes via `makeSuite`
+- `editorial-suite.ts` - 5 layouts x 27 palettes via `makeSuite`
 - Shared helpers: `suite-factory.ts`, `shared.ts`, `rich-sections.ts`
 
 ### Marketing routes

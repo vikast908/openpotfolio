@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { GITHUB_REPO_URL, SITE_URL } from "../lib/site";
 
 function NotFoundComponent() {
   return (
@@ -104,10 +105,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Portfolio Builder",
-          url: "https://openpotfolio.lovable.app",
+          url: SITE_URL,
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://openpotfolio.lovable.app/templates?q={search_term_string}",
+            target: `${SITE_URL}/templates?q={search_term_string}`,
             "query-input": "required name=search_term_string",
           },
         }),
@@ -118,8 +119,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Portfolio Builder",
-          url: "https://openpotfolio.lovable.app",
-          logo: "https://openpotfolio.lovable.app/favicon.ico",
+          url: SITE_URL,
+          logo: `${SITE_URL}/favicon.ico`,
+          sameAs: [GITHUB_REPO_URL],
         }),
       },
     ],

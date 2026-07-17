@@ -123,7 +123,7 @@ const themeSchema = z
   .passthrough()
   .optional();
 
-/** Loose wire schema — missing fields are filled by withDefaults / normalizeConfig. */
+/** Loose wire schema - missing fields are filled by withDefaults / normalizeConfig. */
 export const portfolioConfigSchema = z
   .object({
     v: z.number().optional(),

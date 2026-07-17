@@ -60,7 +60,7 @@ export type MakeSuiteOptions = {
   >;
 };
 
-/** Cartesian product of layouts × palettes → Template[]. */
+/** Cartesian product of layouts x palettes → Template[]. */
 export function makeSuite(opts: MakeSuiteOptions): Template[] {
   const content = opts.content ?? CORE_CONTENT;
   const colorRoles = opts.capabilities?.colorRoles ?? ALL_COLOR_ROLES;

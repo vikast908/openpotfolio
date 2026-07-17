@@ -1,20 +1,20 @@
 # Portfolio.build
 
-An open-source portfolio builder. Pick from **297** templates, fill in your details, tweak colors / fonts / motion, and export a ready-to-ship site — as a zip, a shareable link, or a prompt you paste into any AI coding agent.
+An open-source portfolio builder. Pick from **297** templates, fill in your details, tweak colors / fonts / motion, and export a ready-to-ship site - as a zip, a shareable link, or a prompt you paste into any AI coding agent.
 
 **Live:** https://openpotfolio.lovable.app  
 **Repo:** https://github.com/vikast908/openpotfolio
 
 ## Features
 
-- **297 templates** across Minimal, Terminal, Editorial (5×27), Apple-inspired (5×30), Bento, and role-specific suites (PM, Designer, Photographer, Writer, Consultant, Academic, Freelancer, Studio).
-- **Deep customization** — full color palette, typography (68+ Google fonts, scale, weight, tracking, radius), and motion (preset, intensity, hover) with a working blur-in entrance.
+- **297 templates** across Minimal, Terminal, Editorial (5x27), Apple-inspired (5x30), Bento, and role-specific suites (PM, Designer, Photographer, Writer, Consultant, Academic, Freelancer, Studio).
+- **Deep customization** - full color palette, typography (68+ Google fonts, scale, weight, tracking, radius), and motion (preset, intensity, hover) with a working blur-in entrance.
 - **Live side-by-side preview** with in-place iframe updates (no flicker); entrance animations play once per template mount.
-- **Capability-aware form** — templates declare `content` capabilities so the builder only shows fields that template can render (e.g. case studies for PM templates, not for Minimal Dev).
-- **Rich content model** (where supported) — case studies, skill groups, achievements, testimonials, writing, résumé / CTA.
-- **Accessibility** — WCAG contrast reporter for text/background and text-on-accent pairs.
-- **Three export modes** — static-site zip, shareable URL (config in the hash), or AI-agent prompt (Lovable / ChatGPT / Claude / v0).
-- **No accounts, no server storage** — drafts in `localStorage` per template; share links are fully client-side.
+- **Capability-aware form** - templates declare `content` capabilities so the builder only shows fields that template can render (e.g. case studies for PM templates, not for Minimal Dev).
+- **Rich content model** (where supported) - case studies, skill groups, achievements, testimonials, writing, résumé / CTA.
+- **Accessibility** - WCAG contrast reporter for text/background and text-on-accent pairs.
+- **Three export modes** - static-site zip, shareable URL (config in the hash), or AI-agent prompt (Lovable / ChatGPT / Claude / v0).
+- **No accounts, no server storage** - drafts in `localStorage` per template; share links are fully client-side.
 
 ## Pages
 
@@ -69,7 +69,7 @@ PortfolioConfig  →  Template.render(config)  →  { html, css }
 | `src/lib/portfolio/color.ts` | Shared WCAG contrast math |
 | `src/lib/portfolio/draft.ts` | Per-template localStorage drafts |
 | `src/templates/types.ts` | `Template`, style + **content** capabilities |
-| `src/templates/suite-factory.ts` | Cartesian layout × palette suites |
+| `src/templates/suite-factory.ts` | Cartesian layout x palette suites |
 | `src/templates/rich-sections.ts` | Shared PM / consultant HTML fragments |
 | `src/templates/registry.ts` | `getTemplate` (fail closed) |
 
@@ -77,9 +77,9 @@ PortfolioConfig  →  Template.render(config)  →  { html, css }
 
 1. Add `src/templates/my-template.ts` exporting a `Template` with `meta`, `defaults`, `capabilities` (include `content: CORE_CONTENT` or `RICH_CONTENT`), and `render`.
 2. Register it in `src/templates/registry.ts`.
-3. Prefer CSS variables (`var(--bg)`, `var(--accent)`, …) and `renderWithTheme` from `src/templates/types.ts`.
+3. Prefer CSS variables (`var(--bg)`, `var(--accent)`, ...) and `renderWithTheme` from `src/templates/types.ts`.
 
-Suite templates (Apple / Editorial) go through `makeSuite` — add a layout or palette there instead of a one-off file.
+Suite templates (Apple / Editorial) go through `makeSuite` - add a layout or palette there instead of a one-off file.
 
 ## License
 

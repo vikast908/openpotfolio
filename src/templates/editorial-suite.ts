@@ -11,7 +11,7 @@ import {
 
 /**
  * Editorial suite - magazine, brutalist, Swiss, zine, poster.
- * 5 archetypes × 8 palettes = 40 templates. All themable via CSS vars.
+ * 5 archetypes x 8 palettes = 40 templates. All themable via CSS vars.
  */
 
 type Palette = SuitePalette;

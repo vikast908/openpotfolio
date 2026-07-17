@@ -96,7 +96,7 @@ function Builder() {
     };
   }, [templateId]);
 
-  // Autosave — only when hydrated for this templateId and config matches it.
+  // Autosave - only when hydrated for this templateId and config matches it.
   useEffect(() => {
     if (!hydrated) return;
     if (config.templateId !== templateId) return;

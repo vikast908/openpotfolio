@@ -30,12 +30,12 @@ Client-only portfolio builder: pick a template → edit config → live HTML/CSS
 
 ## Invariants
 
-1. **Theme via CSS variables** — templates use `var(--bg)`, `var(--accent)`, … from `themeCssVars`; do not hard-code palettes in template CSS without vars.
-2. **Content capabilities** — every template must set `capabilities.content` (`CORE_CONTENT` or `RICH_CONTENT`). The form is driven by this; do not show PM-only fields on core templates.
-3. **Fail closed on unknown template ids** — use `getTemplate`, not silent fallback, in preview/export/builder user paths.
-4. **Draft hydrate before autosave** — never write `localStorage` until hydrate for that `templateId` completes (`src/lib/portfolio/draft.ts` + build route).
-5. **Validate wire configs** — share hash and drafts go through `withDefaults` / Zod (`schema.ts`).
-6. **Escape HTML** — all user strings through `esc()` in template renderers.
+1. **Theme via CSS variables** - templates use `var(--bg)`, `var(--accent)`, ... from `themeCssVars`; do not hard-code palettes in template CSS without vars.
+2. **Content capabilities** - every template must set `capabilities.content` (`CORE_CONTENT` or `RICH_CONTENT`). The form is driven by this; do not show PM-only fields on core templates.
+3. **Fail closed on unknown template ids** - use `getTemplate`, not silent fallback, in preview/export/builder user paths.
+4. **Draft hydrate before autosave** - never write `localStorage` until hydrate for that `templateId` completes (`src/lib/portfolio/draft.ts` + build route).
+5. **Validate wire configs** - share hash and drafts go through `withDefaults` / Zod (`schema.ts`).
+6. **Escape HTML** - all user strings through `esc()` in template renderers.
 
 ## Commands
 

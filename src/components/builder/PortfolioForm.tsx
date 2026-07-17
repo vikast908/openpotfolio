@@ -76,7 +76,7 @@ export function PortfolioForm({ config, template, onChange }: Props) {
                 <Input
                   value={config.resumeUrl ?? ""}
                   onChange={(e) => set("resumeUrl", e.target.value)}
-                  placeholder="https://…/resume.pdf"
+                  placeholder="https://.../resume.pdf"
                 />
               </Field>
               <Field label="Call-to-action">
@@ -94,7 +94,7 @@ export function PortfolioForm({ config, template, onChange }: Props) {
                 placeholder="Open to senior PM roles · remote or London"
               />
             </Field>
-            <Field label="Key strengths (2–4)">
+            <Field label="Key strengths (2-4)">
               <ChipList
                 items={config.strengths ?? []}
                 onChange={(items) => set("strengths", items)}
