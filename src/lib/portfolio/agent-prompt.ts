@@ -7,8 +7,8 @@ export function buildAgentPrompt(config: PortfolioConfig): string {
     `Build me a personal portfolio website as a single static HTML/CSS page.`,
     `Use this configuration (open the link to see the live preview and copy the JSON): ${url}`,
     `Match the "${config.templateId}" template's layout and typography.`,
-    `Owner: ${config.name} — ${config.headline}.`,
-    `MIT licensed. No framework required in the output — plain semantic HTML with a single stylesheet.`,
+    `Owner: ${config.name} - ${config.headline}.`,
+    `MIT licensed. No framework required in the output - plain semantic HTML with a single stylesheet.`,
   ].join("\n\n");
 }
 

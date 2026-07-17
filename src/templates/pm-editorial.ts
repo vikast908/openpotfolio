@@ -42,7 +42,7 @@ const template: Template = {
   <section><h2>Capabilities</h2>${skillsBlockHtml(config)}</section>
   ${testimonialsHtml(config)}
   ${writingHtml(config)}
-  ${config.experience.length ? `<section><h2>Experience</h2>${config.experience.map((e) => `<div class="exp"><strong>${esc(e.role)}</strong> — ${esc(e.company)}<div class="row"><span>${esc(e.summary ?? "")}</span><span>${esc(e.period)}</span></div></div>`).join("")}</section>` : ""}
+  ${config.experience.length ? `<section><h2>Experience</h2>${config.experience.map((e) => `<div class="exp"><strong>${esc(e.role)}</strong> - ${esc(e.company)}<div class="row"><span>${esc(e.summary ?? "")}</span><span>${esc(e.period)}</span></div></div>`).join("")}</section>` : ""}
   <footer class="colophon"><h2>Colophon</h2><p>${contactLineHtml(config)}</p></footer>
 </article>`;
     return renderWithTheme(config, template.defaults, () => `

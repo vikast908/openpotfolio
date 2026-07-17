@@ -27,7 +27,7 @@ export async function downloadZip(config: PortfolioConfig): Promise<void> {
   zip.file("index.html", html);
   zip.file(
     "README.md",
-    `# ${config.name} — Portfolio\n\nGenerated with the open-source Portfolio Builder.\nTemplate: **${template.meta.name}** (\`${template.meta.id}\`)\n\nTo publish: upload \`index.html\` to any static host (Netlify, Vercel, GitHub Pages, Cloudflare Pages).\n\nMIT Licensed — see LICENSE.\n`,
+    `# ${config.name} - Portfolio\n\nGenerated with the open-source Portfolio Builder.\nTemplate: **${template.meta.name}** (\`${template.meta.id}\`)\n\nTo publish: upload \`index.html\` to any static host (Netlify, Vercel, GitHub Pages, Cloudflare Pages).\n\nMIT Licensed - see LICENSE.\n`,
   );
   zip.file("LICENSE", MIT(new Date().getFullYear(), config.name));
   zip.file("portfolio.json", JSON.stringify(config, null, 2));

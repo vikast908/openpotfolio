@@ -75,7 +75,7 @@ export function PortfolioForm({ config, onChange }: Props) {
       <section className="space-y-3">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">About</h3>
         <Field label="Career story">
-          <Textarea rows={4} value={config.story ?? ""} onChange={(e) => set("story", e.target.value)} placeholder="How you got here — turning points, why product." />
+          <Textarea rows={4} value={config.story ?? ""} onChange={(e) => set("story", e.target.value)} placeholder="How you got here - turning points, why product." />
         </Field>
         <Field label="Product philosophy">
           <Textarea rows={3} value={config.philosophy ?? ""} onChange={(e) => set("philosophy", e.target.value)} placeholder="How you approach problems, teams, decisions." />
@@ -265,7 +265,7 @@ export function PortfolioForm({ config, onChange }: Props) {
           onAdd={() =>
             set("experience", [
               ...config.experience,
-              { role: "Role", company: "Company", period: "2024 — Now", summary: "" },
+              { role: "Role", company: "Company", period: "2024 - Now", summary: "" },
             ])
           }
         />
@@ -378,7 +378,7 @@ function ProjectRow({
           <Textarea rows={2} placeholder="Execution / what shipped" value={project.execution ?? ""} onChange={(e) => onChange({ ...project, execution: e.target.value })} />
           <Textarea rows={2} placeholder="Results (quantified)" value={project.results ?? ""} onChange={(e) => onChange({ ...project, results: e.target.value })} />
           <Input
-            placeholder="Metric chips — Label:Value, comma-separated (e.g. Activation:+38%, Retention:+12%)"
+            placeholder="Metric chips - Label:Value, comma-separated (e.g. Activation:+38%, Retention:+12%)"
             value={(project.metrics ?? []).map((m) => `${m.label}:${m.value}`).join(", ")}
             onChange={(e) =>
               onChange({

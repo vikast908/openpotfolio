@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 export const Route = createFileRoute("/templates")({
   head: () => ({
     meta: [
-      { title: "300 portfolio templates — Portfolio Builder" },
+      { title: "300 portfolio templates - Portfolio Builder" },
       { name: "description", content: "Browse 300 open-source portfolio templates for developers, designers, PMs, writers, photographers, and more. Fully customizable." },
-      { property: "og:title", content: "300 portfolio templates — Portfolio Builder" },
+      { property: "og:title", content: "300 portfolio templates - Portfolio Builder" },
       { property: "og:description", content: "Browse 300 open-source portfolio templates. Fully customizable." },
       { property: "og:url", content: "https://openpotfolio.lovable.app/templates" },
     ],

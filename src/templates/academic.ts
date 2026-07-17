@@ -27,7 +27,7 @@ ${config.socials.map(s => `<a href="${esc(s.url)}" data-hover>${esc(s.label)}</a
 <h2>Bio</h2>
 <p>${esc(config.bio)}</p>
 <h2>Publications & Projects</h2>
-${config.projects.map((p,i)=>`<div class="pub" data-anim style="--i:${i}"><b>${p.url?`<a href="${esc(p.url)}" data-hover>${esc(p.title)}</a>`:esc(p.title)}</b> — ${esc(p.description)}<div class="meta">${p.tags.map(esc).join(", ")}</div></div>`).join("")}
+${config.projects.map((p,i)=>`<div class="pub" data-anim style="--i:${i}"><b>${p.url?`<a href="${esc(p.url)}" data-hover>${esc(p.title)}</a>`:esc(p.title)}</b> - ${esc(p.description)}<div class="meta">${p.tags.map(esc).join(", ")}</div></div>`).join("")}
 ${config.experience.length ? `<h2>Positions</h2>${config.experience.map(e=>`<div class="pub"><b>${esc(e.role)}</b>, ${esc(e.company)} <span class="meta">(${esc(e.period)})</span><br>${esc(e.summary ?? "")}</div>`).join("")}` : ""}
 <h2>Research interests</h2>
 <div class="skills">${config.skills.map(esc).join(" · ")}</div>

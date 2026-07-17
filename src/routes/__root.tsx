@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Portfolio Builder — 300 open-source templates" },
+      { title: "Portfolio Builder - 300 open-source templates" },
       { name: "description", content: "Open-source portfolio builder. 300 templates, one form, live preview. Download a static site or hand it to any AI coding agent. MIT." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Portfolio Builder" },

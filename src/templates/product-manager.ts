@@ -64,7 +64,7 @@ const template: Template = {
       .map((a) => `<li><b>${esc(a.title)}</b>${a.year ? ` <em>${esc(a.year)}</em>` : ""}${a.detail ? `<p>${esc(a.detail)}</p>` : ""}</li>`)
       .join("");
     const testimonials = (config.testimonials ?? [])
-      .map((t) => `<figure class="quote"><blockquote>"${esc(t.quote)}"</blockquote><figcaption>— ${esc(t.author)}${t.role ? `, ${esc(t.role)}` : ""}</figcaption></figure>`)
+      .map((t) => `<figure class="quote"><blockquote>"${esc(t.quote)}"</blockquote><figcaption>- ${esc(t.author)}${t.role ? `, ${esc(t.role)}` : ""}</figcaption></figure>`)
       .join("");
     const writing = (config.writing ?? [])
       .map((w) => `<li>${w.kind ? `<em>${esc(w.kind)}</em>` : ""}${w.url ? `<a href="${esc(w.url)}">${esc(w.title)}</a>` : `<span>${esc(w.title)}</span>`}${w.summary ? `<p>${esc(w.summary)}</p>` : ""}</li>`)
@@ -111,7 +111,7 @@ const template: Template = {
 
   ${writing ? `<section><h2>Writing & talks</h2><ul class="writing">${writing}</ul></section>` : ""}
 
-  ${config.experience.length ? `<section><h2>Experience</h2>${config.experience.map((e) => `<div class="exp"><strong>${esc(e.role)}</strong> — ${esc(e.company)}<div class="row"><span>${esc(e.summary ?? "")}</span><span>${esc(e.period)}</span></div></div>`).join("")}</section>` : ""}
+  ${config.experience.length ? `<section><h2>Experience</h2>${config.experience.map((e) => `<div class="exp"><strong>${esc(e.role)}</strong> - ${esc(e.company)}<div class="row"><span>${esc(e.summary ?? "")}</span><span>${esc(e.period)}</span></div></div>`).join("")}</section>` : ""}
 
   <section id="contact">
     <h2>Reach out</h2>

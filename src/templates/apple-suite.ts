@@ -358,7 +358,7 @@ function renderMono(p: Palette): Template["render"] {
     <h2>Work</h2>
     ${config.projects.map((pr, i) => `<article data-anim style="--i:${i}"><h3>${pr.url ? `<a href="${esc(pr.url)}" data-hover>${esc(pr.title)}</a>` : esc(pr.title)}</h3><div class="meta">${pr.tags.map(esc).join(" · ")}</div><p>${esc(pr.description)}</p></article>`).join("")}
   </section>
-  ${config.experience.length ? `<section data-anim><h2>Experience</h2>${config.experience.map((e)=>`<div class="row"><b>${esc(e.role)}</b>, ${esc(e.company)} <span class="mut">— ${esc(e.period)}</span><br><span class="mut">${esc(e.summary ?? "")}</span></div>`).join("")}</section>` : ""}
+  ${config.experience.length ? `<section data-anim><h2>Experience</h2>${config.experience.map((e)=>`<div class="row"><b>${esc(e.role)}</b>, ${esc(e.company)} <span class="mut">- ${esc(e.period)}</span><br><span class="mut">${esc(e.summary ?? "")}</span></div>`).join("")}</section>` : ""}
   <section data-anim><h2>Skills</h2><p class="skills">${config.skills.map(esc).join(" · ")}</p></section>
   <footer data-anim>${emailLink(config)} <span class="mut">${socials(config)}</span></footer>
 </main>`;
