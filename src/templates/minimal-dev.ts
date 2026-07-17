@@ -31,7 +31,7 @@ const template: Template = {
 <main>
   <header>
     <h1>${esc(config.name)}</h1>
-    <div class="mut">${esc(config.headline)}${config.location ? ` — ${esc(config.location)}` : ""}</div>
+    <div class="mut">${esc(config.headline)}${config.location ? ` - ${esc(config.location)}` : ""}</div>
     <div class="socials">${socialsHtml(config)}</div>
   </header>
   <section data-anim><h2>About</h2><p>${esc(config.bio)}</p></section>

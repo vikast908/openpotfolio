@@ -31,7 +31,7 @@ import {
 export const Route = createFileRoute("/build/$templateId")({
   head: ({ params }) => ({
     meta: [
-      { title: `Build — ${params.templateId} · Portfolio Builder` },
+      { title: `Build - ${params.templateId} · Portfolio Builder` },
       { name: "description", content: "Fill in your details and watch your portfolio render live." },
       { name: "robots", content: "noindex" },
     ],

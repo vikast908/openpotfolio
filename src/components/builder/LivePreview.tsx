@@ -4,7 +4,7 @@ import type { PortfolioConfig } from "@/lib/portfolio/types";
 
 /**
  * Preview that mutates the iframe document in place instead of swapping
- * `srcDoc` — no white flash, no reload, no scroll reset while typing.
+ * `srcDoc` - no white flash, no reload, no scroll reset while typing.
  *
  * Only the templateId change forces a full re-mount (structure & <head>
  * differ across templates so we accept the reload there).

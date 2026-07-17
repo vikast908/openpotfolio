@@ -63,7 +63,7 @@ export function ExportDialog({ config }: { config: PortfolioConfig }) {
 
           <TabsContent value="link" className="space-y-3 pt-4">
             <p className="text-sm text-muted-foreground">
-              Config is encoded in the URL fragment — nothing hits any server. Send this to anyone to open the same builder pre-filled.
+              Config is encoded in the URL fragment - nothing hits any server. Send this to anyone to open the same builder pre-filled.
             </p>
             <div className="flex gap-2">
               <Input value={url} readOnly onFocus={(e) => e.currentTarget.select()} />
@@ -73,7 +73,7 @@ export function ExportDialog({ config }: { config: PortfolioConfig }) {
             </div>
             {url.length > 6000 && (
               <p className="text-xs text-amber-600">
-                This link is long. Some chat apps truncate very long URLs — the .zip is a reliable fallback.
+                This link is long. Some chat apps truncate very long URLs - the .zip is a reliable fallback.
               </p>
             )}
           </TabsContent>

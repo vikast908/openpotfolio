@@ -112,7 +112,7 @@ export function motionCss(m: PortfolioMotion): string {
       anim = `animation:anim-in ${dur}ms cubic-bezier(0.23,1,0.32,1) both;animation-delay:calc(min(var(--i,0), 6) * ${Math.round(40 * intensity)}ms)`;
       break;
     case "blur-in":
-      // Only blur text nodes — cheaper on Safari and preserves image/border fidelity.
+      // Only blur text nodes - cheaper on Safari and preserves image/border fidelity.
       kf = `@keyframes anim-in-blur{from{opacity:0;filter:blur(4px)}to{opacity:1;filter:blur(0)}}
 @keyframes anim-in{from{opacity:0}to{opacity:1}}`;
       anim = `animation:anim-in ${dur}ms cubic-bezier(0.23,1,0.32,1) both`;

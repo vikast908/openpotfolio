@@ -18,10 +18,10 @@ const template: Template = {
     const body = `
 <header>
   <h1>${esc(config.name)}</h1>
-  <div class="sub">${esc(config.headline)}${config.location?` — ${esc(config.location)}`:""}</div>
+  <div class="sub">${esc(config.headline)}${config.location?` - ${esc(config.location)}`:""}</div>
 </header>
 <div class="masonry">
-${config.projects.map((p,i)=>p.imageUrl?`<div class="tile" data-anim style="--i:${i}"><img src="${esc(p.imageUrl)}" alt="${esc(p.title)}"/><div class="cap"><b>${esc(p.title)}</b> — ${esc(p.description)}</div></div>`:`<div class="tile" data-anim style="--i:${i}"><div class="ph" style="--ar:${ars[i%ars.length]}">${esc(p.title)}</div><div class="cap"><b>${esc(p.title)}</b> — ${esc(p.description)}</div></div>`).join("")}
+${config.projects.map((p,i)=>p.imageUrl?`<div class="tile" data-anim style="--i:${i}"><img src="${esc(p.imageUrl)}" alt="${esc(p.title)}"/><div class="cap"><b>${esc(p.title)}</b> - ${esc(p.description)}</div></div>`:`<div class="tile" data-anim style="--i:${i}"><div class="ph" style="--ar:${ars[i%ars.length]}">${esc(p.title)}</div><div class="cap"><b>${esc(p.title)}</b> - ${esc(p.description)}</div></div>`).join("")}
 </div>
 <div class="about">${esc(config.bio)}</div>
 <footer>${config.email?`<a href="mailto:${esc(config.email)}" data-hover>${esc(config.email)}</a>`:""}${config.socials.map(s=>`<a href="${esc(s.url)}" data-hover>${esc(s.label)}</a>`).join("")}</footer>`;

@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Motion tokens — Emil-style strong custom easings.
+/* Motion tokens - Emil-style strong custom easings.
  * Use with utilities like transition-timing-function:var(--ease-out) or
  * ease-[var(--ease-out)] in Tailwind arbitrary values. */
 :root {
@@ -22,7 +22,7 @@
 html, body { font-family: var(--font-sans); }
 .font-display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.02em; }
 
-/* Enter animations — used with data-enter attribute or on mount. */
+/* Enter animations - used with data-enter attribute or on mount. */
 @keyframes rise-in {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }

@@ -88,7 +88,7 @@ export function achievementsHtml(c: PortfolioConfig): string {
 
 export function testimonialsHtml(c: PortfolioConfig): string {
   const items = (c.testimonials ?? [])
-    .map((t) => `<figure class="quote"><blockquote>&ldquo;${esc(t.quote)}&rdquo;</blockquote><figcaption>— ${esc(t.author)}${t.role ? `, ${esc(t.role)}` : ""}</figcaption></figure>`)
+    .map((t) => `<figure class="quote"><blockquote>&ldquo;${esc(t.quote)}&rdquo;</blockquote><figcaption>- ${esc(t.author)}${t.role ? `, ${esc(t.role)}` : ""}</figcaption></figure>`)
     .join("");
   return items ? `<section><h2>What people say</h2><div class="quotes">${items}</div></section>` : "";
 }

@@ -4,7 +4,7 @@ import type { PortfolioConfig } from "@/lib/portfolio/types";
 import type { TemplateDefaults } from "@/lib/portfolio/theme";
 
 /**
- * Editorial suite — magazine, brutalist, Swiss, zine, poster.
+ * Editorial suite - magazine, brutalist, Swiss, zine, poster.
  * 5 archetypes × 8 palettes = 40 templates. All themable via CSS vars.
  */
 
@@ -357,7 +357,7 @@ function renderSwiss(p: Palette): Template["render"] {
   </div>
   ${config.experience.length ? `<div class="c-exp">
     <div class="sec-lbl" data-anim>Experience</div>
-    ${config.experience.map((e)=>`<div class="row" data-anim><div class="per">${esc(e.period)}</div><div><b>${esc(e.role)}</b> — ${esc(e.company)}<br><span class="mut">${esc(e.summary ?? "")}</span></div></div>`).join("")}
+    ${config.experience.map((e)=>`<div class="row" data-anim><div class="per">${esc(e.period)}</div><div><b>${esc(e.role)}</b> - ${esc(e.company)}<br><span class="mut">${esc(e.summary ?? "")}</span></div></div>`).join("")}
   </div>` : ""}
   <div class="c-skills">
     <div class="sec-lbl" data-anim>Skills</div>
@@ -420,7 +420,7 @@ function renderZine(p: Palette): Template["render"] {
       </article>`).join("")}
     </div>
   </section>
-  ${config.experience.length ? `<section class="sec" data-anim><h2><span>Where I've been</span></h2>${config.experience.map((e)=>`<div class="line"><b>${esc(e.role)}</b> at ${esc(e.company)} <span class="mut">— ${esc(e.period)}</span><div class="mut">${esc(e.summary ?? "")}</div></div>`).join("")}</section>` : ""}
+  ${config.experience.length ? `<section class="sec" data-anim><h2><span>Where I've been</span></h2>${config.experience.map((e)=>`<div class="line"><b>${esc(e.role)}</b> at ${esc(e.company)} <span class="mut">- ${esc(e.period)}</span><div class="mut">${esc(e.summary ?? "")}</div></div>`).join("")}</section>` : ""}
   <section class="sec" data-anim><h2><span>I do</span></h2><div class="skills">${config.skills.map(s=>`<span>${esc(s)}</span>`).join("")}</div></section>
 </main>`;
     return renderWithTheme(config, defaults, () => `

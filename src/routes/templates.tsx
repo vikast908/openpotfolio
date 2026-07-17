@@ -4,11 +4,14 @@ import { templates } from "@/templates/registry";
 import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/templates")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    tag: typeof search.tag === "string" ? search.tag : undefined,
+  }),
   head: () => ({
     meta: [
-      { title: "300 portfolio templates — Portfolio Builder" },
+      { title: "300 portfolio templates - Portfolio Builder" },
       { name: "description", content: "Browse 300 open-source portfolio templates for developers, designers, PMs, writers, photographers, and more. Fully customizable." },
-      { property: "og:title", content: "300 portfolio templates — Portfolio Builder" },
+      { property: "og:title", content: "300 portfolio templates - Portfolio Builder" },
       { property: "og:description", content: "Browse 300 open-source portfolio templates. Fully customizable." },
       { property: "og:url", content: "https://openpotfolio.lovable.app/templates" },
     ],
@@ -30,8 +33,9 @@ export const Route = createFileRoute("/templates")({
 });
 
 function Templates() {
+  const { tag: tagFromUrl } = Route.useSearch();
   const [q, setQ] = useState("");
-  const [tag, setTag] = useState<string>("all");
+  const [tag, setTag] = useState<string>(tagFromUrl ?? "all");
 
   const allTags = useMemo(() => {
     const s = new Set<string>();
@@ -54,7 +58,10 @@ function Templates() {
       <header className="border-b">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link to="/" className="font-semibold">Portfolio<span className="text-primary">.</span>build</Link>
-          <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground">About</Link>
+          <nav className="flex items-center gap-4 text-sm">
+            <Link to="/topics" className="text-muted-foreground hover:text-foreground">Topics</Link>
+            <Link to="/about" className="text-muted-foreground hover:text-foreground">About</Link>
+          </nav>
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-6 py-12">

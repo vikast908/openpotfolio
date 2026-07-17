@@ -30,7 +30,7 @@ function Landing() {
           </em>
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-lg text-muted-foreground">
-          Pick a template, fill one form, watch it render live. Download a static site — or hand it to Lovable,
+          Pick a template, fill one form, watch it render live. Download a static site - or hand it to Lovable,
           ChatGPT, Claude, or v0 to extend.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -108,6 +108,7 @@ function Nav() {
         </Link>
         <nav className="flex items-center gap-4 text-sm">
           <Link to="/templates" className="text-muted-foreground hover:text-foreground">Templates</Link>
+          <Link to="/topics" className="text-muted-foreground hover:text-foreground">Topics</Link>
           <Link to="/about" className="text-muted-foreground hover:text-foreground">About</Link>
           <a
             href="https://github.com/vikast908/openpotfolio"

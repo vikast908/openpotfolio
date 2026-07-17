@@ -35,7 +35,7 @@ ${config.projects
 <h2>Skills</h2>
 <div>${config.skills.map((s) => `<span class="tag">${esc(s)}</span>`).join("")}</div>
 <h2>Say hi</h2>
-<p>${config.email ? `<a href="mailto:${esc(config.email)}">${esc(config.email)}</a> — ` : ""}${config.socials.map((s) => `<a href="${esc(s.url)}">${esc(s.label)}</a>`).join(" · ")}</p>
+<p>${config.email ? `<a href="mailto:${esc(config.email)}">${esc(config.email)}</a> - ` : ""}${config.socials.map((s) => `<a href="${esc(s.url)}">${esc(s.label)}</a>`).join(" · ")}</p>
 </main>`;
     return renderWithTheme(config, template.defaults, () => `
 html,body{margin:0;line-height:1.5}

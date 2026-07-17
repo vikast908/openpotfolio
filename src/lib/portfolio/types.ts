@@ -8,7 +8,7 @@ export type PortfolioProject = {
   // Case study fields (all optional; templates render only when present)
   role?: string;           // Your role on the project
   team?: string;           // Team composition
-  timeline?: string;       // e.g. "Q1 2024 — Q3 2024"
+  timeline?: string;       // e.g. "Q1 2024 - Q3 2024"
   problem?: string;        // Problem / context
   research?: string;       // Research & evidence
   goals?: string;          // Goals & metrics targeted
@@ -84,7 +84,7 @@ export type PortfolioConfig = {
   experience: PortfolioExperience[];
   theme: PortfolioTheme;
   templateId: string;
-  // Optional PM/rich-portfolio fields — all templates render only what's present.
+  // Optional PM/rich-portfolio fields - all templates render only what's present.
   resumeUrl?: string;
   workPreference?: string;      // e.g. "Open to full-time PM roles, EU/remote"
   cta?: string;                 // e.g. "Book a 20-min intro call"
@@ -130,7 +130,7 @@ export const defaultConfig: PortfolioConfig = {
     {
       role: "Senior Engineer",
       company: "Analytical Engines",
-      period: "2021 — Now",
+      period: "2021 - Now",
       summary: "Led the compiler team building numerical DSLs.",
     },
   ],
@@ -141,7 +141,7 @@ export const defaultConfig: PortfolioConfig = {
   cta: "Book a 20-min intro call",
   strengths: ["0→1 product discovery", "Growth & activation", "Platform strategy"],
   story:
-    "I started as an engineer, moved into product to be closer to the problem. Ten years across fintech, dev tools, and marketplaces — always shipping alongside the team, always writing the story down.",
+    "I started as an engineer, moved into product to be closer to the problem. Ten years across fintech, dev tools, and marketplaces - always shipping alongside the team, always writing the story down.",
   philosophy:
     "Small bets, sharp evidence, honest retros. The best PMs make the team faster at learning, not just faster at shipping.",
   industries: ["Fintech", "Developer tools", "Marketplaces"],
