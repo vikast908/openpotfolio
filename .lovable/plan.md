@@ -1,162 +1,141 @@
+# Deep customization for every template
 
-# Portfolio Builder — v1 Plan
+## The problem
 
-An open-source (MIT) web app where anyone can pick a portfolio template, fill in their details in a single form, watch it render live side-by-side, and then either **download a static HTML/CSS zip** or **copy a shareable link + prompt** they can paste into any AI coding agent (Lovable, ChatGPT, Claude, Cursor) to rebuild/extend it.
+Right now `theme` only exposes `accent` + a coarse `font: sans|serif|mono`. Every template hard-codes its background, text, border, and secondary colors inside its CSS string. So the color picker in the Theme panel visibly changes very little — most of the palette is baked in. There's no font size / weight control, no per-heading font choice, and no motion knob.
 
-No accounts, no backend, no database. Everything lives client-side in the URL + localStorage.
+## Design goals
 
-## User flow
+1. Give the user real dials — but not so many that the UI turns into Photoshop.
+2. Every dial must have a *sensible per-template default* so the template still looks like itself out of the box, and a **Reset to template default** button.
+3. The template author declares which knobs make sense (a Terminal template shouldn't expose "serif heading font"; a Writer template shouldn't expose "monospace body").
+4. Zero data loss: existing saved drafts (old shape) hydrate cleanly.
 
-```text
-┌─────────────────────────────────────────────────────────────┐
-│  1. Landing (/)                                             │
-│     Hero + "Browse templates" + example screenshots         │
-├─────────────────────────────────────────────────────────────┤
-│  2. Template gallery (/templates)                           │
-│     Grid of 10+ thumbnails, filter by tag                   │
-├─────────────────────────────────────────────────────────────┤
-│  3. Builder (/build/$templateId)                            │
-│     ┌──────────────┬──────────────────────────────┐         │
-│     │  Form (L)    │  Live preview (R, iframe)    │         │
-│     │  name, bio,  │  updates on every keystroke  │         │
-│     │  projects[], │                              │         │
-│     │  skills[],   │  [Change template] [Export]  │         │
-│     │  socials,    │                              │         │
-│     │  theme       │                              │         │
-│     └──────────────┴──────────────────────────────┘         │
-├─────────────────────────────────────────────────────────────┤
-│  4. Export dialog                                           │
-│     • Download .zip (index.html, styles.css, LICENSE, README)│
-│     • Copy shareable link (config encoded in URL hash)      │
-│     • Copy AI-agent prompt ("Build me this portfolio: ...")│
-│     • Open link in Lovable / ChatGPT / Claude / Cursor      │
-└─────────────────────────────────────────────────────────────┘
-```
-
-## Pages / routes
-
-- `/` — landing
-- `/templates` — gallery
-- `/build/$templateId` — form + live preview + export
-- `/about` — what this project is, MIT, GitHub link, how to contribute a template
-- `/preview/$templateId` — fullscreen preview (for gallery hover / share link target for humans opening a shared URL without the builder chrome)
-
-## Data model (single `PortfolioConfig`)
-
-One TypeScript type shared by every template and by the AI-agent prompt schema:
+## New `theme` shape
 
 ```ts
-type PortfolioConfig = {
-  name: string;
-  headline: string;         // "Frontend engineer" etc.
-  bio: string;              // 1–3 paragraphs
-  avatarUrl?: string;
-  location?: string;
-  email?: string;
-  socials: { label: string; url: string }[];
-  skills: string[];
-  projects: {
-    title: string;
-    description: string;
-    url?: string;
-    imageUrl?: string;
-    tags: string[];
-  }[];
-  experience?: { role: string; company: string; period: string; summary?: string }[];
-  theme: { accent: string; font: "sans" | "serif" | "mono" };
-  templateId: string;
+type PortfolioTheme = {
+  // Colors — a real palette, not one accent
+  colors: {
+    background: string;   // page background
+    surface:    string;   // cards / panels
+    text:       string;   // primary text
+    muted:      string;   // secondary text / meta
+    border:     string;   // dividers / hairlines
+    accent:     string;   // links / highlights
+    accentText: string;   // text on accent
+  };
+  // Typography
+  typography: {
+    headingFont: FontKey;    // e.g. "inter" | "instrument-serif" | "jetbrains-mono" | ...
+    bodyFont:    FontKey;
+    scale:       number;     // 0.85 – 1.25, multiplies base font-size
+    headingWeight: 400 | 500 | 600 | 700 | 800 | 900;
+    tracking:    "tight" | "normal" | "wide";  // letter-spacing preset
+    radius:      number;     // 0 – 24 px, corner radius token
+  };
+  // Motion
+  motion: {
+    preset: "none" | "fade" | "rise" | "stagger-rise" | "blur-in";
+    intensity: number;  // 0 – 1.5, scales distance & duration
+    hover: "none" | "lift" | "underline" | "tilt";
+  };
 };
 ```
 
-## Templates (10 for v1)
+Fonts come from a curated `FONTS` registry (~10 options, loaded via `<link>` in `__root.tsx` — Inter, Instrument Serif, JetBrains Mono, Space Grotesk, DM Serif Display, Fraunces, Geist Mono, Iowan/Georgia stack, etc.). Each font entry knows its CSS stack and whether it's serif/sans/mono, so templates can filter.
 
-React components in-repo under `src/templates/<id>/index.tsx`, each exporting:
+## Per-template capability declaration
+
+Extend `TemplateMeta` with:
 
 ```ts
-export default function Template(props: { config: PortfolioConfig }): JSX.Element
-export const meta = { id, name, tags, thumbnail };
-export function toStaticHtml(config: PortfolioConfig): { html: string; css: string };
+capabilities: {
+  colorRoles: Array<"background"|"surface"|"text"|"muted"|"border"|"accent"|"accentText">;
+  fontRoles:  Array<"headingFont"|"bodyFont">;
+  fontFilter?: (f: FontEntry) => boolean;      // Terminal → mono only
+  motionPresets: Array<PortfolioTheme["motion"]["preset"]>;
+  supports: { scale: boolean; radius: boolean; tracking: boolean; weight: boolean; hover: boolean };
+};
+defaultTheme: PortfolioTheme;                  // the "designed" look for this template
 ```
 
-The same component renders the live preview AND, via `toStaticHtml`, the exported static files (no React runtime in the export). Templates registered in `src/templates/registry.ts`.
+So the Theme panel is generated *from* the active template: Terminal shows only bg/text/accent, mono fonts, no radius, motion presets `none|fade`. Studio-Bento exposes everything.
 
-Starter set spanning niches:
-1. Minimal / Developer (mono, dark)
-2. Terminal (CLI-styled)
-3. Creative / Designer (bold type, image-heavy)
-4. Photographer (masonry)
-5. Writer / Journalist (serif, long-form)
-6. Consultant / Professional (clean, corporate)
-7. Product Manager (case-study layout)
-8. Academic / Researcher (publication list)
-9. Freelancer (services + pricing)
-10. Studio / Multidisciplinary (bento grid)
+## How templates consume theme
 
-Contribution model: the built-in 10 are React. A `docs/CONTRIBUTING-TEMPLATES.md` documents the interface and shows how to add a template as either (a) a React component or (b) a plain HTML/CSS folder wrapped by a small React adapter.
+Templates stop hard-coding colors. `wrapDoc` receives the resolved theme and injects CSS variables + font stacks + a scoped motion stylesheet:
 
-## Live preview
+```css
+:root{
+  --bg:...; --surface:...; --text:...; --muted:...; --border:...;
+  --accent:...; --accent-text:...;
+  --radius:...px; --scale:...;
+  --font-heading:...; --font-body:...;
+  --track:...;
+  --motion-duration:...ms;
+}
+```
 
-- Right pane is a sandboxed `<iframe srcDoc={...}>` rendering the current template with the current config (or a same-window portal if perf is fine).
-- Debounced ~50 ms so typing feels instant.
-- Device-size toggle (desktop / mobile) in the preview header.
+Each template's CSS references these vars instead of literal `#fff`. Refactor is mechanical: 10 templates × ~15 min each. The motion preset appends a `<style>` block with the appropriate `@keyframes` + `animation` rules keyed on `[data-anim]` attributes the template already emits on section wrappers.
 
-## Export
+Motion presets (implementation sketch):
+- `none` — no animation.
+- `fade` — 220ms opacity 0→1 on load.
+- `rise` — translateY(8px→0) + opacity, 320ms ease-out.
+- `stagger-rise` — same, with `animation-delay: calc(var(--i) * 60ms)` per card.
+- `blur-in` — 280ms blur(8px→0) + opacity.
 
-Client-side only:
-- **Zip download**: use `jszip` to bundle `index.html`, `styles.css`, `assets/…`, `LICENSE` (MIT), `README.md` (credits + rebuild instructions). Blob → `<a download>`.
-- **Shareable link**: `location.origin + '/build/<templateId>#c=<base64url(json)>'` — config in the hash so it never hits any server. `/build/*` reads the hash on mount to prefill the form.
-- **AI-agent prompt**: templated string like:
-  > "Build me a personal portfolio website. Use the config JSON at <link>. Match the '<templateId>' template layout. Keep it a single static HTML/CSS page. MIT licensed."
-  Copy button + one-click deep links to Lovable, ChatGPT, Claude, Cursor with the prompt pre-filled where each supports it.
-- Big config → fallback: "Link too long — download the JSON instead" button.
+Intensity multiplies distance & duration. `prefers-reduced-motion: reduce` collapses everything to a simple opacity fade regardless of preset. Hover presets are pure CSS (`:hover` transforms).
 
-## Persistence
+## New Theme panel (right side of the form)
 
-- Every keystroke autosaves to `localStorage` under `portfolio-builder:draft:<templateId>`.
-- "Reset" button clears it.
-- No accounts, no Lovable Cloud in v1.
+Replace the current 2-field Theme section with a collapsible, tabbed **Style** panel:
 
-## Open source
+- **Colors** — one swatch + hex input per role the template exposes. "Palette presets" row on top (5 curated palettes tuned per template).
+- **Type** — heading font & body font dropdowns (with live font-name preview in that font), scale slider, weight buttons, tracking pills.
+- **Motion** — segmented control for preset, intensity slider, hover behavior pills.
+- **Layout** — radius slider (if `supports.radius`).
+- Sticky "Reset style to template default" button.
 
-- MIT `LICENSE` at repo root.
-- `README.md` explains the project, screenshots, how to run, how to add a template.
-- Exported zips include their own MIT `LICENSE` naming the end user as copyright holder.
-- Footer + `/about` link to the GitHub repo (URL to be filled in when repo exists).
+Preview updates live (existing 40ms debounce).
 
-## Tech / files
+## Migration & backward compat
 
-- Stack: TanStack Start (already scaffolded), Tailwind v4, shadcn.
-- New deps: `jszip` (zip export). Everything else stays in-project.
-- New files (indicative):
-  - `src/lib/portfolio/types.ts` — `PortfolioConfig`
-  - `src/lib/portfolio/encode.ts` — base64url encode/decode of config for URL hash
-  - `src/lib/portfolio/export-zip.ts` — build + trigger zip download
-  - `src/lib/portfolio/agent-prompt.ts` — build the AI-agent prompt string + deep links
-  - `src/templates/registry.ts` + `src/templates/<id>/index.tsx` × 10
-  - `src/components/builder/PortfolioForm.tsx`
-  - `src/components/builder/LivePreview.tsx`
-  - `src/components/builder/ExportDialog.tsx`
-  - `src/routes/index.tsx` (rewrite placeholder → landing)
-  - `src/routes/templates.tsx`
-  - `src/routes/build.$templateId.tsx`
-  - `src/routes/preview.$templateId.tsx`
-  - `src/routes/about.tsx`
-  - Head metadata per route.
+`withDefaults` maps the old `theme: { accent, font }` shape onto the new one:
+- `accent` → `colors.accent`; other colors fall back to the template's `defaultTheme`.
+- `font: "sans"|"serif"|"mono"` → picks a default `headingFont`/`bodyFont` from that family.
 
-## Out of scope for v1 (called out so we don't scope-creep)
+Old shareable URLs and old localStorage drafts keep working.
 
-- Accounts, saved portfolios, versioning.
-- Hosting the generated site (users download or hand off to an AI agent).
-- Custom domain / one-click deploy.
-- WYSIWYG drag-and-drop editor.
-- Template marketplace UI (contributions go through GitHub PR).
-- i18n.
+## File plan
+
+New:
+- `src/lib/portfolio/fonts.ts` — FONTS registry + `fontLinkTags()`.
+- `src/lib/portfolio/theme.ts` — `resolveTheme`, `themeCssVars`, `motionCss`.
+- `src/components/builder/StylePanel.tsx` — new collapsible panel (Colors / Type / Motion / Layout).
+- `src/components/builder/ColorRoleField.tsx`, `FontPicker.tsx`, `MotionPicker.tsx` — small pieces.
+
+Edited:
+- `src/lib/portfolio/types.ts` — new `PortfolioTheme` + migration in `withDefaults`.
+- `src/templates/types.ts` — `capabilities`, `defaultTheme`; `wrapDoc` accepts resolved theme and emits CSS vars + motion styles + font links.
+- All 10 templates — replace literal colors with `var(--…)`, add `data-anim` on section wrappers, declare `capabilities` + `defaultTheme`.
+- `src/components/builder/PortfolioForm.tsx` — remove the old Theme section, mount `<StylePanel>` instead.
+- `src/routes/__root.tsx` — preconnect + load the curated font set.
+
+## Out of scope (intentionally)
+
+- Per-section spacing controls (would explode UI complexity).
+- Uploading custom fonts.
+- Free-form CSS override box (footgun; user asked to "drive" animations, not to write CSS).
+- Dark-mode toggle separate from palette (palette is the dark-mode toggle).
 
 ## Milestones
 
-1. **Scaffolding** — routes, `PortfolioConfig` type, registry, form shell, live-preview iframe, one placeholder template. Landing + templates gallery reading from registry.
-2. **Template pack** — build out all 10 templates + their `toStaticHtml`. Thumbnails auto-render from `/preview/$templateId`.
-3. **Export** — zip download, shareable link (hash config), AI-agent prompt + deep links, autosave.
-4. **Polish** — SEO metadata per route, `/about` + MIT + contribution docs, empty states, mobile responsive builder (form on top, preview below).
+1. Types + fonts registry + theme resolver + migration.
+2. Refactor `wrapDoc` + one pilot template (Minimal-Dev) to prove the CSS-var pattern; verify export zip still runs standalone.
+3. Migrate remaining 9 templates.
+4. Ship `StylePanel` UI; retire old Theme fields.
+5. Update AI-agent prompt so the exported prompt describes the resolved theme literally (no more "accent: #hex" only).
 
-Ready to build on approval.
+Estimated ~500 LOC net, mostly mechanical template edits.
