@@ -52,6 +52,10 @@ export function LivePreview({
     const parser = new DOMParser();
     const next = parser.parseFromString(html, "text/html");
     const nextStyle = next.querySelector("style")?.textContent ?? "";
+    // Strip data-anim on in-place mutations so entrance animations
+    // don't replay on every keystroke while editing. First mount
+    // (needsFullWrite above) still plays them once.
+    next.body.querySelectorAll("[data-anim]").forEach((el) => el.removeAttribute("data-anim"));
     const nextBody = next.body.innerHTML;
 
     let styleTag = doc.querySelector("style");

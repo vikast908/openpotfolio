@@ -117,7 +117,7 @@ export function StylePanel({ config, template, onChange }: Props) {
                   key={p.key}
                   onClick={() => applyPalette(p)}
                   title={`${p.name} · ${p.category}`}
-                  className="group relative flex h-9 overflow-hidden rounded border transition-transform hover:scale-[1.04] hover:border-primary/60"
+                  className="group relative flex h-9 overflow-hidden rounded border transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:scale-[1.04] hover:border-primary/60 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-1"
                   aria-label={`Apply ${p.name} palette`}
                 >
                   <span className="flex-1" style={{ background: p.colors.background }} />
@@ -199,7 +199,7 @@ export function StylePanel({ config, template, onChange }: Props) {
                   <button
                     key={w}
                     onClick={() => setTypo("headingWeight", w)}
-                    className={`h-7 rounded border px-2 text-xs transition-colors ${
+                    className={`h-7 rounded border px-2 text-xs transition-[transform,background-color,border-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${
                       resolved.typography.headingWeight === w
                         ? "border-primary bg-primary text-primary-foreground"
                         : "border-border hover:bg-muted"
@@ -221,7 +221,7 @@ export function StylePanel({ config, template, onChange }: Props) {
                   <button
                     key={t}
                     onClick={() => setTypo("tracking", t)}
-                    className={`flex-1 h-7 rounded border px-2 text-xs capitalize transition-colors ${
+                    className={`flex-1 h-7 rounded border px-2 text-xs capitalize transition-[transform,background-color,border-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${
                       resolved.typography.tracking === t
                         ? "border-primary bg-primary text-primary-foreground"
                         : "border-border hover:bg-muted"
@@ -255,7 +255,7 @@ export function StylePanel({ config, template, onChange }: Props) {
                 <button
                   key={preset}
                   onClick={() => setMotion("preset", preset)}
-                  className={`h-8 rounded border px-2 text-xs transition-colors ${
+                  className={`h-8 rounded border px-2 text-xs transition-[transform,background-color,border-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${
                     resolved.motion.preset === preset
                       ? "border-primary bg-primary text-primary-foreground"
                       : "border-border hover:bg-muted"
@@ -285,7 +285,7 @@ export function StylePanel({ config, template, onChange }: Props) {
                   <button
                     key={h}
                     onClick={() => setMotion("hover", h)}
-                    className={`h-7 rounded border px-2 text-xs capitalize transition-colors ${
+                    className={`h-7 rounded border px-2 text-xs capitalize transition-[transform,background-color,border-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${
                       resolved.motion.hover === h
                         ? "border-primary bg-primary text-primary-foreground"
                         : "border-border hover:bg-muted"

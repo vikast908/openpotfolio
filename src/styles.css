@@ -24,14 +24,15 @@ html, body { font-family: var(--font-sans); }
 
 /* Enter animations — used with data-enter attribute or on mount. */
 @keyframes rise-in {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.enter { animation: rise-in 400ms var(--ease-out) both; }
+.enter { animation: rise-in 220ms var(--ease-out) both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .enter { animation: none; }
-  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  /* Keep opacity/color for comprehension; drop movement only. */
+  .enter { animation: rise-in 200ms ease-out both; }
+  @keyframes rise-in { from { opacity: 0; } to { opacity: 1; } }
 }
 
 /*
