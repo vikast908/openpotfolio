@@ -110,7 +110,7 @@ function Nav() {
           <Link to="/templates" className="text-muted-foreground hover:text-foreground">Templates</Link>
           <Link to="/about" className="text-muted-foreground hover:text-foreground">About</Link>
           <a
-            href="https://github.com"
+            href="https://github.com/vikast908/openpotfolio"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground"
