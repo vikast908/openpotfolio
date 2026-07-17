@@ -2,9 +2,6 @@
 
 An open-source portfolio builder. Pick from **297** templates, fill in your details, tweak colors / fonts / motion, and export a ready-to-ship site - as a zip, a shareable link, or a prompt you paste into any AI coding agent.
 
-**Live:** https://openpotfolio.lovable.app  
-**Repo:** https://github.com/vikast908/openpotfolio
-
 ## Features
 
 - **297 templates** across Minimal, Terminal, Editorial (5x27), Apple-inspired (5x30), Bento, and role-specific suites (PM, Designer, Photographer, Writer, Consultant, Academic, Freelancer, Studio).
