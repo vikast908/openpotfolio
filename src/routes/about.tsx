@@ -10,7 +10,9 @@ export const Route = createFileRoute("/about")({
       },
       { property: "og:title", content: "About — Portfolio Builder" },
       { property: "og:description", content: "Open source, MIT, no accounts, no lock-in." },
+      { property: "og:url", content: "https://openpotfolio.lovable.app/about" },
     ],
+    links: [{ rel: "canonical", href: "/about" }],
   }),
   component: About,
 });

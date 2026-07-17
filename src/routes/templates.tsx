@@ -6,10 +6,24 @@ import { Input } from "@/components/ui/input";
 export const Route = createFileRoute("/templates")({
   head: () => ({
     meta: [
-      { title: "Templates — Portfolio Builder" },
-      { name: "description", content: "10 open-source portfolio templates. Pick one and start building." },
-      { property: "og:title", content: "Templates — Portfolio Builder" },
-      { property: "og:description", content: "10 open-source portfolio templates. Pick one and start building." },
+      { title: "300 portfolio templates — Portfolio Builder" },
+      { name: "description", content: "Browse 300 open-source portfolio templates for developers, designers, PMs, writers, photographers, and more. Fully customizable." },
+      { property: "og:title", content: "300 portfolio templates — Portfolio Builder" },
+      { property: "og:description", content: "Browse 300 open-source portfolio templates. Fully customizable." },
+      { property: "og:url", content: "https://openpotfolio.lovable.app/templates" },
+    ],
+    links: [{ rel: "canonical", href: "/templates" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Portfolio templates",
+          url: "https://openpotfolio.lovable.app/templates",
+          description: "Open-source portfolio templates.",
+        }),
+      },
     ],
   }),
   component: Templates,

@@ -170,7 +170,7 @@ export function PortfolioForm({ config, onChange }: Props) {
               }}
             />
             <div className="flex justify-end">
-              <Button variant="ghost" size="sm" onClick={() => set("skillGroups", (config.skillGroups ?? []).filter((_, idx) => idx !== i))}>
+              <Button variant="ghost" size="sm" aria-label="Delete skill group" onClick={() => set("skillGroups", (config.skillGroups ?? []).filter((_, idx) => idx !== i))}>
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>
@@ -286,7 +286,7 @@ export function PortfolioForm({ config, onChange }: Props) {
               const arr = [...config.experience]; arr[i] = { ...e, summary: ev.target.value }; set("experience", arr);
             }} />
             <div className="flex justify-end">
-              <Button variant="ghost" size="sm" onClick={() => set("experience", config.experience.filter((_, idx) => idx !== i))}>
+              <Button variant="ghost" size="sm" aria-label="Delete experience" onClick={() => set("experience", config.experience.filter((_, idx) => idx !== i))}>
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>
@@ -358,7 +358,7 @@ function ProjectRow({
             {expanded ? <ChevronDown className="h-4 w-4 mr-1" /> : <ChevronRight className="h-4 w-4 mr-1" />}
             Case study
           </Button>
-          <Button variant="ghost" size="sm" onClick={onRemove}>
+          <Button variant="ghost" size="sm" aria-label="Delete project" onClick={onRemove}>
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>
@@ -405,7 +405,7 @@ function AchievementRow({ value, onChange, onRemove }: { value: PortfolioAchieve
       <div className="grid gap-2 sm:grid-cols-3">
         <Input placeholder="Title (Grew activation 38%)" value={value.title} onChange={(e) => onChange({ ...value, title: e.target.value })} />
         <Input placeholder="Year" value={value.year ?? ""} onChange={(e) => onChange({ ...value, year: e.target.value })} />
-        <Button variant="ghost" size="sm" onClick={onRemove}>
+        <Button variant="ghost" size="sm" aria-label="Delete achievement" onClick={onRemove}>
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
@@ -421,7 +421,7 @@ function TestimonialRow({ value, onChange, onRemove }: { value: PortfolioTestimo
       <div className="grid gap-2 sm:grid-cols-3">
         <Input placeholder="Author" value={value.author} onChange={(e) => onChange({ ...value, author: e.target.value })} />
         <Input placeholder="Role" value={value.role ?? ""} onChange={(e) => onChange({ ...value, role: e.target.value })} />
-        <Button variant="ghost" size="sm" onClick={onRemove}>
+        <Button variant="ghost" size="sm" aria-label="Delete testimonial" onClick={onRemove}>
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
@@ -439,7 +439,7 @@ function WritingRow({ value, onChange, onRemove }: { value: PortfolioWriting; on
       </div>
       <Textarea rows={2} placeholder="Summary (optional)" value={value.summary ?? ""} onChange={(e) => onChange({ ...value, summary: e.target.value })} />
       <div className="flex justify-end">
-        <Button variant="ghost" size="sm" onClick={onRemove}>
+        <Button variant="ghost" size="sm" aria-label="Delete writing entry" onClick={onRemove}>
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
@@ -460,7 +460,7 @@ function SocialRow({
     <div className="flex gap-2">
       <Input placeholder="Label (GitHub)" value={social.label} onChange={(e) => onChange({ ...social, label: e.target.value })} />
       <Input placeholder="https://..." value={social.url} onChange={(e) => onChange({ ...social, url: e.target.value })} />
-      <Button variant="ghost" size="icon" onClick={onRemove}>
+      <Button variant="ghost" size="icon" aria-label="Delete social link" onClick={onRemove}>
         <Trash2 className="h-4 w-4" />
       </Button>
     </div>

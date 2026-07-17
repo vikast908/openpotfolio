@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /preview/
+Disallow: /build/
+
+Sitemap: https://openpotfolio.lovable.app/sitemap.xml

@@ -8,6 +8,7 @@ export const Route = createFileRoute("/preview/$templateId")({
   head: ({ params }) => ({
     meta: [
       { title: `Preview — ${params.templateId}` },
+      { name: "description", content: `Live preview of the ${params.templateId} portfolio template. Customize colors, typography, and content in the builder.` },
       { name: "robots", content: "noindex" },
     ],
   }),

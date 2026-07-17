@@ -1,0 +1,9 @@
+# Portfolio Builder
+
+> Open-source, MIT-licensed portfolio builder. Pick from 300 templates, fill one form, live preview, then download a static site or hand it to any AI coding agent.
+
+## Pages
+
+- [Home](/): What it is and how it works.
+- [Templates](/templates): 300 open-source portfolio templates across developer, designer, PM, writer, photographer, and studio niches.
+- [About](/about): How the builder works, the AI-agent handoff, and the MIT license.
