@@ -103,4 +103,3 @@ export function wrapDoc(title: string, css: string, body: string): string {
 
 // Re-export FONTS for template author convenience.
 export { FONTS };
-}
