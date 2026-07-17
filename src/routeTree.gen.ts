@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BuildTemplateIdRouteImport } from './routes/build.$templateId'
 
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
@@ -22,31 +23,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuildTemplateIdRoute = BuildTemplateIdRouteImport.update({
+  id: '/build/$templateId',
+  path: '/build/$templateId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/templates': typeof TemplatesRoute
+  '/build/$templateId': typeof BuildTemplateIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/templates': typeof TemplatesRoute
+  '/build/$templateId': typeof BuildTemplateIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/templates': typeof TemplatesRoute
+  '/build/$templateId': typeof BuildTemplateIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/templates'
+  fullPaths: '/' | '/templates' | '/build/$templateId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/templates'
-  id: '__root__' | '/' | '/templates'
+  to: '/' | '/templates' | '/build/$templateId'
+  id: '__root__' | '/' | '/templates' | '/build/$templateId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TemplatesRoute: typeof TemplatesRoute
+  BuildTemplateIdRoute: typeof BuildTemplateIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/build/$templateId': {
+      id: '/build/$templateId'
+      path: '/build/$templateId'
+      fullPath: '/build/$templateId'
+      preLoaderRoute: typeof BuildTemplateIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TemplatesRoute: TemplatesRoute,
+  BuildTemplateIdRoute: BuildTemplateIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
