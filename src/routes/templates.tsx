@@ -23,7 +23,7 @@ function Templates() {
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-6 py-12">
-        <h1 className="text-4xl font-bold tracking-tight">Pick a template</h1>
+        <h1 className="font-display text-6xl leading-[0.95] tracking-tight">Pick a template</h1>
         <p className="mt-2 text-muted-foreground">Click any card to open it in the builder with example data. Change anything, then export.</p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {templates.map((t) => (
@@ -31,11 +31,15 @@ function Templates() {
               key={t.meta.id}
               to="/build/$templateId"
               params={{ templateId: t.meta.id }}
-              className="group overflow-hidden rounded-xl border transition hover:border-primary hover:shadow-md"
+              className="group overflow-hidden rounded-xl border transition-[transform,box-shadow,border-color] duration-200 ease-[var(--ease-out)] hover:-translate-y-1 hover:border-foreground/20 hover:shadow-[var(--shadow-lift)]"
             >
-              <div className="flex h-40">
+              <div className="flex h-40 overflow-hidden">
                 {t.meta.swatch.map((c, i) => (
-                  <div key={i} className="flex-1 transition-all group-hover:flex-[1.1]" style={{ background: c }} />
+                  <div
+                    key={i}
+                    className="flex-1 transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-y-105"
+                    style={{ background: c, transformOrigin: "bottom" }}
+                  />
                 ))}
               </div>
               <div className="p-4">
