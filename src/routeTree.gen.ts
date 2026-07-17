@@ -9,38 +9,108 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PreviewTemplateIdRouteImport } from './routes/preview.$templateId'
+import { Route as BuildTemplateIdRouteImport } from './routes/build.$templateId'
 
+const TemplatesRoute = TemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PreviewTemplateIdRoute = PreviewTemplateIdRouteImport.update({
+  id: '/preview/$templateId',
+  path: '/preview/$templateId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildTemplateIdRoute = BuildTemplateIdRouteImport.update({
+  id: '/build/$templateId',
+  path: '/build/$templateId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/templates': typeof TemplatesRoute
+  '/build/$templateId': typeof BuildTemplateIdRoute
+  '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/templates': typeof TemplatesRoute
+  '/build/$templateId': typeof BuildTemplateIdRoute
+  '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/templates': typeof TemplatesRoute
+  '/build/$templateId': typeof BuildTemplateIdRoute
+  '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/templates'
+    | '/build/$templateId'
+    | '/preview/$templateId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/templates'
+    | '/build/$templateId'
+    | '/preview/$templateId'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/templates'
+    | '/build/$templateId'
+    | '/preview/$templateId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  TemplatesRoute: typeof TemplatesRoute
+  BuildTemplateIdRoute: typeof BuildTemplateIdRoute
+  PreviewTemplateIdRoute: typeof PreviewTemplateIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/templates': {
+      id: '/templates'
+      path: '/templates'
+      fullPath: '/templates'
+      preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +118,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/preview/$templateId': {
+      id: '/preview/$templateId'
+      path: '/preview/$templateId'
+      fullPath: '/preview/$templateId'
+      preLoaderRoute: typeof PreviewTemplateIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/build/$templateId': {
+      id: '/build/$templateId'
+      path: '/build/$templateId'
+      fullPath: '/build/$templateId'
+      preLoaderRoute: typeof BuildTemplateIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  TemplatesRoute: TemplatesRoute,
+  BuildTemplateIdRoute: BuildTemplateIdRoute,
+  PreviewTemplateIdRoute: PreviewTemplateIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
