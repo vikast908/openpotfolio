@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, AlertTriangle, CheckCircle2 } from "lucide-react";
 
 type Props = {
   config: PortfolioConfig;
@@ -79,6 +79,12 @@ export function StylePanel({ config, template, onChange }: Props) {
 
   const c = template.capabilities;
 
+  const contrast = getContrastReport(resolved.colors.text, resolved.colors.background);
+  const accentContrast = getContrastReport(
+    resolved.colors.accentText,
+    resolved.colors.accent,
+  );
+
   return (
     <section className="space-y-3">
       <div className="flex items-center justify-between">
@@ -120,6 +126,13 @@ export function StylePanel({ config, template, onChange }: Props) {
               </div>
             </div>
           ))}
+          <div className="mt-3 space-y-1.5 rounded border border-border/60 bg-muted/30 p-2.5">
+            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Accessibility
+            </div>
+            <ContrastRow label="Text on background" report={contrast} />
+            <ContrastRow label="Text on accent" report={accentContrast} />
+          </div>
         </TabsContent>
 
         <TabsContent value="type" className="space-y-4 pt-3">
